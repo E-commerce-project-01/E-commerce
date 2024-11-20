@@ -11,7 +11,10 @@ module.exports =  (sequelize , DataTypes)  => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-    
+        logo: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
     
         floorprice: {
             type: DataTypes.INTEGER,
@@ -23,6 +26,10 @@ module.exports =  (sequelize , DataTypes)  => {
         },
         owner: {
             type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        verified: {
+            type: DataTypes.TINYINT(0),
             allowNull: true,
         },
         items: {
