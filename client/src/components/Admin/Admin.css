@@ -1,0 +1,143 @@
+
+  
+  .container {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header .logo {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .header .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #3A1E68;
+    border-radius: 8px;
+    padding: 5px 10px;
+  }
+  
+  .header .search-bar input {
+    background: none;
+    border: none;
+    color: white;
+    outline: none;
+    padding: 5px;
+    width: 300px;
+  }
+  
+  .header .search-bar i {
+    margin-right: 10px;
+  }
+  
+  .header .nav-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header .nav-links a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .header .nav-links i {
+    margin-left: 20px;
+  }
+  
+  .main-content {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .main-content h1 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  
+  .main-content p {
+    font-size: 16px;
+    color: #B0A8B9;
+  }
+  
+  .main-content .btn {
+    background-color: #A259FF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .filters {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .filters .filter-btn {
+    background-color: #3A1E68;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .table-container {
+    margin-top: 30px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    padding: 15px;
+    text-align: left;
+  }
+  
+  table th {
+    color: #B0A8B9;
+  }
+  
+  table tr {
+    border-bottom: 1px solid #3A1E68;
+  }
+  
+  table tr:last-child {
+    border-bottom: none;
+  }
+  
+  table td img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  table td .verified {
+    color: #1DA1F2;
+    margin-left: 5px;
+  }
+  
+  table td .positive {
+    color: #00FF00;
+  }
+  
+  table td .negative {
+    color: #FF0000;
+  }
+  
