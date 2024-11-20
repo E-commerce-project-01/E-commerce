@@ -11,6 +11,11 @@ const brandsroute = require("./routes/brands.js")
 
 
 app.use("/brands" , brandsroute)
+app.use("/user" , )
+app.use("/" , )
+app.use("/" , )
+app.use("/" , )
+app.use("/" , )
 
 
 app.listen(PORT, () => {
