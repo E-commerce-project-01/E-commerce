@@ -14,7 +14,7 @@ module.exports = {
     database: process.env.speakeasy,
     host: process.env.localhost,
     dialect: process.env.mysql,
-    logging: false, // Disable logging in production for better performance
+    logging: false, 
   },
 };
 process.env.JWT_SECRET
