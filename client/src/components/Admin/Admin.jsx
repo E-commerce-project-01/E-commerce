@@ -8,12 +8,27 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Admin = () => {
     const [data, setdata] = useState([]);
+    const [productCounts, setProductCounts] = useState({}); 
+
+    const fetchProductCount = async (brandId) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/products/brand/${brandId}`);
+            setProductCounts(prevCounts => ({
+                ...prevCounts,
+                [brandId]: response.data.length 
+            }));
+        } catch (error) {
+            console.error(`Error fetching product count for brand ID ${brandId}:`, error);
+        }
+    };
 
     useEffect(() => { 
         axios.get("http://localhost:3000/brands/allbrands")
             .then((res) => {
                 setdata(res.data);
-                console.log(res.data);
+                res.data.forEach(brand => {
+                    fetchProductCount(brand.id);
+                });
             })
             .catch((err) => console.log(err));
     }, []);
@@ -84,7 +99,7 @@ const Admin = () => {
                 <td className="py-4 text-green-500">{item.day}</td>
                 <td className="py-4">{item.floorprice}</td>
                 <td className="py-4">{item.owner}</td>
-                <td className="py-4">{item.items}</td>
+                <td className="py-4">{productCounts[item.id] || 0}</td>
             </tr>
         ))}
     </tbody>
