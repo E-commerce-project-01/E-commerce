@@ -1,11 +1,9 @@
 import './App.css'
-import Home from './components/home/Home'
+import Home from './Components/home/Home.jsx';
 import Signup from './Components/signup/Signup.jsx'
 import Login from './Components/signup/Login.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
-
-
   return (
 
     <Router>
