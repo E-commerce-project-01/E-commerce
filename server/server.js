@@ -8,23 +8,11 @@ app.use(express.json());
 require("./database/index.js")
 const PORT = 3000;
 const brandsroute = require("./routes/brands.js")
+const productsRoute = require("./routes/AllProducts.js")
 
 
 app.use("/brands" , brandsroute)
-// app.use("/" , )
-// app.use("/" , )
-// app.use("/" , )
-// app.use("/" , )
-// app.use("/" , )
-
-
-
-
-
-
-
-
-
+app.use("/api/products", productsRoute);
 
 
 

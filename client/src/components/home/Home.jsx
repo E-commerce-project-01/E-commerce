@@ -33,7 +33,6 @@ const Home = () => {
           </button>
           <button className="wallet-btn">
             <FiShoppingCart size={18} />
-            Wallet
           </button>
           <img 
             src="/path-to-your-profile-image.jpg" 

@@ -6,4 +6,6 @@ const brandsroute = express.Router()
 brandsroute.get("/allbrands" , getbrands)
 
 
+
+
 module.exports = brandsroute
