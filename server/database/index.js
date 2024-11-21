@@ -1,7 +1,7 @@
 const { Sequelize  } = require('sequelize');
 
 
-const sequelize = new Sequelize('e-commerce', 'root', 'root', {
+const sequelize = new Sequelize('e-commerce', 'root', 'sazitoun', {
   host: 'localhost',
   dialect: 'mysql' 
 });
@@ -37,11 +37,11 @@ db.products.belongsTo(db.brands)
 
 
 
-  sequelize.sync({alter : true}).then(() => {
- console.log(' table created successfully!');
- }).catch((error) => {
-  console.error('Unable to create table : ', error);
- });
+//   sequelize.sync({alter : true}).then(() => {
+//  console.log(' table created successfully!');
+//  }).catch((error) => {
+//   console.error('Unable to create table : ', error);
+//  });
 
 
 module.exports= db
