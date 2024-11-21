@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../signup/Signup.css';
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -18,8 +20,7 @@ const Signup = () => {
 
   const validatePassword = (password) => {
     const errors = [];
-    const passwordChecking =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    const passwordChecking = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
     if (password.length < 8) {
       errors.push('Password should be 8 characters or more.');
     }
@@ -44,18 +45,19 @@ const Signup = () => {
     }
 
     try {
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        password,
+        birthMonth,
+        birthDay,
+        birthYear,
+      };
+
       const response = await axios.post(
         'http://localhost:3000/user/signup',
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-          image: imageUrl,
-          birthMonth,
-          birthDay,
-          birthYear,
-        },
+        userData,
         { headers: { 'Content-Type': 'application/json' } }
       );
 
@@ -65,16 +67,24 @@ const Signup = () => {
         text: 'You have successfully signed up. Please log in.',
       });
 
-      navigate('/user/login');
+      navigate('/');
     } catch (error) {
-      if (error.response.data === 'User already exists') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Email Already Registered',
-          text: 'This email address is already registered. Please use a different one.',
-        });
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        if (errorData.errors) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: errorData.errors.join(', '),
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Signup Failed',
+            text: errorData.message || 'An error occurred during signup. Please try again later.',
+          });
+        }
       } else {
-        console.error(error);
         Swal.fire({
           icon: 'error',
           title: 'Signup Failed',
@@ -92,16 +102,16 @@ const Signup = () => {
           alt="Illustration of a person with crossed arms"
           className="signup-image"
         />
-        <h4 className='gretting'>Begin your meta fashion journey here </h4>
+        <h4 className="gretting">Begin your meta fashion journey here </h4>
       </div>
 
       <form className="signup-form">
-        <h3 className="signupMessage">Sign Up</h3>
+        <h3 className="signupMessage" style={{"marginBottom":"0"}}>Sign Up</h3>
         <div className="signup-link">
           <p>
             Already a Member?{' '}
-            <a className="login-link-text" onClick={() => navigate('/user/login')}>
-              Sign In
+            <a className="login-link-text" style={{"cursor":"pointer"}} onClick={() => navigate('/')}>
+              Login
             </a>
           </p>
         </div>
@@ -109,11 +119,12 @@ const Signup = () => {
         <div>
           <input
             type="email"
-            id="email"
+            className="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
+            autoComplete="off"
           />
         </div>
 
@@ -126,6 +137,7 @@ const Signup = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
+              autoComplete="off"
             />
           </div>
           <div className="name-input">
@@ -136,6 +148,7 @@ const Signup = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
+              autoComplete="off"
             />
           </div>
         </div>
@@ -148,11 +161,13 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            autoComplete="off"
           />
-          <i
-            className={`fas fa-eye${passwordVisible ? '-slash' : ''}`}
+          <FontAwesomeIcon
+            icon={passwordVisible ? faEyeSlash : faEye}
             onClick={() => setPasswordVisible(!passwordVisible)}
-          ></i>
+            className="passwordSwitch"
+          />
         </div>
 
         <div className="personal-info">

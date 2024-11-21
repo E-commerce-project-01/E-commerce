@@ -8,9 +8,12 @@ app.use(express.json());
 require("./database/index.js")
 const PORT = 3000;
 const brandsroute = require("./routes/brands.js")
+const userRoute = require("./routes/user.js");
+
 
 
 app.use("/brands" , brandsroute)
+app.use("/user", userRoute); 
 
 
 
