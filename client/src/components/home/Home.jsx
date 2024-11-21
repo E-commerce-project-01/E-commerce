@@ -1,48 +1,12 @@
 import React from 'react';
-import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
+import Navbar from '../navbar/Navbar';
 import './Home.css';
 
 const Home = () => {
   return (
     <div className="home">
-      <header className="header">
-        <a href="/" className="logo">Logo</a>
-        <div className="nav-center">
-          <div className="search-container">
-            <FiSearch className="search-icon" />
-            <input
-              type="search"
-              className="search-bar"
-              placeholder="Search Items, Fashion, Collection and Users"
-            />
-          </div>
-          <nav className="nav-links">
-            <a href="#home">Home</a>
-            <a href="#explore">Explore <FiChevronDown /></a>
-            <a href="#collection">Personal Collection</a>
-            <a href="#drops">Drops</a>
-            <a href="#more" className="more-link">More <FiChevronDown /></a>
-          </nav>
-        </div>
-        <div className="nav-right">
-          <button className="icon-button">
-            <FiBell size={20} />
-          </button>
-          <button className="icon-button">
-            <FiMessageSquare size={20} />
-          </button>
-          <button className="wallet-btn">
-            <FiShoppingCart size={18} />
-          </button>
-          <img 
-            src="/path-to-your-profile-image.jpg" 
-            alt="Profile" 
-            className="profile-img"
-          />
-        </div>
-      </header>
-
-      <main className="main-content">
+      <Navbar />
+      <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
           <button className="tab">Creators Market</button>
@@ -75,23 +39,26 @@ const Home = () => {
           </div>
 
           <div className="gallery">
-            <div className="gallery-item">
-              <img src="/path-to-image-1.jpg" alt="Fashion item 1" />
+            <div className="gallery-item small">
+              <img src="/shoes-purple.jpg" alt="Purple Shoes" />
             </div>
-            <div className="gallery-item">
-              <img src="/path-to-image-2.jpg" alt="Fashion item 2" />
+            <div className="gallery-item small">
+              <img src="/shoes-yellow.jpg" alt="Yellow Shoes" />
             </div>
-            <div className="gallery-item">
-              <img src="/path-to-image-3.jpg" alt="Fashion item 3" />
+            <div className="gallery-item tall">
+              <img src="/dress-gold.jpg" alt="Gold Dress" />
             </div>
-            <div className="gallery-item">
-              <img src="/path-to-image-4.jpg" alt="Fashion item 4" />
+            <div className="gallery-item medium">
+              <img src="/jacket-blue.jpg" alt="Blue Jacket" />
             </div>
-            <div className="gallery-item">
-              <img src="/path-to-image-5.jpg" alt="Fashion item 5" />
+            <div className="gallery-item medium">
+              <img src="/shoes-display.jpg" alt="Shoes Display" />
             </div>
-            <div className="gallery-item">
-              <img src="/path-to-image-6.jpg" alt="Fashion item 6" />
+            <div className="gallery-item small">
+              <img src="/shoes-green.jpg" alt="Green Shoes" />
+            </div>
+            <div className="gallery-item small">
+              <img src="/character.jpg" alt="Character" />
             </div>
           </div>
         </div>
@@ -106,7 +73,7 @@ const Home = () => {
           <h2>About Us</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
