@@ -8,7 +8,7 @@ import '../signup/Login.css';
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isEmailStep, setIsEmailStep] = useState(true); // toggle between email and password
+    const [isEmailStep, setIsEmailStep] = useState(true); 
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -29,7 +29,9 @@ const Login = () => {
                     const { token, user } = response.data;
                     localStorage.setItem("token", token);
                     localStorage.setItem("user", JSON.stringify(user));
-                        // navigate("/test");
+                    localStorage.setItem('userAvatar', response.data.user.avatar);
+
+                        navigate("/home");
                         window.location.reload();
                     setError("");
                 }

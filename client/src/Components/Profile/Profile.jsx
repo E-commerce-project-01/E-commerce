@@ -3,6 +3,8 @@ import { jwtDecode } from 'jwt-decode';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ const Profile = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
+        const userData = JSON.parse(localStorage.getItem('user')) || {};
         const fullName = localStorage.getItem('fullName') || decodedToken.fullName || 'Unknown';
         const unique = fullName.split(' ')[0].toLowerCase();
         
@@ -23,7 +26,9 @@ const Profile = () => {
           name: fullName,
           username: unique
         });
-        setAvatar(decodedToken.avatar || '/default-avatar.png');
+        
+        const savedAvatar = userData.avatar || localStorage.getItem('userAvatar');
+        setAvatar(savedAvatar || '/default-avatar.png');
       } catch (error) {
         console.error("Error decoding token:", error);
         navigate("/user/login");
@@ -38,14 +43,39 @@ const Profile = () => {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('upload_preset', 'your_upload_preset');
+      formData.append('upload_preset', 'speakeasy');
+      formData.append('cloud_name', 'dc9siq9ry');
       try {
-        const res = await axios.post('https://api.cloudinary.com/v1_1/your-cloud-name/image/upload', formData);
-        const imageUrl = res.data.secure_url;
+        const uploadRes = await axios.post(
+          'https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload',
+          formData
+        );
+        const imageUrl = uploadRes.data.secure_url;
+        
+        const token = localStorage.getItem('token');
+        await axios.put(
+          'http://localhost:3000/user/update-avatar',
+          { avatar: imageUrl },
+          { 
+            headers: { 
+              Authorization: `Bearer ${token}` 
+            } 
+          }
+        );
+        
+        localStorage.setItem('userAvatar', imageUrl);
+        
+        const userData = JSON.parse(localStorage.getItem('user')) || {};
+        userData.avatar = imageUrl;
+        localStorage.setItem('user', JSON.stringify(userData));
+        
         setAvatar(imageUrl);
-        await axios.put('http://localhost:3000/user/update-avatar', { avatar: imageUrl });
       } catch (err) {
         console.error('Error uploading image:', err);
+        if (err.response && err.response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/user/login');
+        }
       }
     }
   };
@@ -80,29 +110,28 @@ const Profile = () => {
         <div className="profileHeader">
           <div className="profilePicture">
             <img
-              src={avatar}
+              src={avatar || '/default-avatar.png'}
               alt="Profile Picture"
               height="100"
               width="100"
-              onError={(e) => {}}
             />
-            <div className="uploadAvatarButton" onClick={() => document.getElementById('avatar-upload').click()}>
-              <i className="fas fa-camera" />
-            </div>
           </div>
+          <div className="uploadAvatarButton" onClick={() => document.getElementById('avatar-upload').click()}>
+              <FontAwesomeIcon icon={faCamera} />
+            </div>
           <div className="profileActions">
             <div className="createPostButton" onClick={handleCreatePost}>
-              <i className="fas fa-plus"></i> Create Post
+              <FontAwesomeIcon icon={faPlus} /> Create Post
             </div>
             <div className="editProfileButton">
-              <i className="fas fa-edit"></i> Edit Profile
+              <FontAwesomeIcon icon={faEdit} /> Edit Profile
             </div>
           </div>
         </div>
         <div className="profileDetails">
           <h1 style={{ color: "#ffffff" }}>{user.name}</h1>
           <p style={{ color: "#625c70" }}>@{user.username}</p>
-          <p  style={{ color: "#ffffff" }}>
+          <p style={{ color: "#ffffff" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Torro, consectetur adipiscing elit. Ut urna placerat morbi cursus pulvinar nunc adipiscing.
           </p>
         </div>
@@ -161,10 +190,10 @@ const Profile = () => {
                         className="CreatedPostAvatar"
                       />
                       <div className="postInfo">
-                        <h3  style={{ color: "#ffffff" }}>{user.name}</h3>
+                        <h3 style={{ color: "#ffffff" }}>{user.name}</h3>
                       </div>
                     </div>
-                    <p  style={{ color: "#ffffff" }}>{post.content}</p>
+                    <p style={{ color: "#ffffff" }}>{post.content}</p>
                     {post.image && (
                       <img 
                         src={post.image} 
@@ -180,7 +209,13 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <input type="file" id="avatar-upload" style={{ display: 'none' }} onChange={handleFileChange} />
+        <input 
+          type="file" 
+          id="avatar-upload" 
+          style={{ display: 'none' }} 
+          onChange={handleFileChange}
+          accept="image/*"
+        />
       </div>
     </div>
   );

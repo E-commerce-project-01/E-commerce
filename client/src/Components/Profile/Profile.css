@@ -3,6 +3,7 @@
     font-family: Arial, sans-serif;
 }
 
+
 .profilePage {
     width: 80%;
     margin: 0 auto;
@@ -26,8 +27,11 @@
     border-radius: 50%;
     width: 100px;
     height: 100px;
-    overflow: hidden;
     cursor: pointer;
+    object-fit: cover;
+    z-index: 00;
+    overflow: visible;
+    overflow: hidden;
 }
 
 .profilePicture img {
@@ -40,11 +44,23 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     color: white;
-    padding: 5px;
+    padding: 8px;
     border-radius: 50%;
     cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.uploadAvatarButton:hover {
+    background: rgba(0, 0, 0, 0.95);
+    transform: scale(1.5);
 }
 
 .editProfileButton {
@@ -54,9 +70,9 @@
     border-radius: 20px;
     cursor: pointer;
     transition: transform 0.4s ease;
-   
 }
-.editProfileButton:hover{
+
+.editProfileButton:hover {
     transform: scale(1.1);
 }
 
@@ -318,4 +334,3 @@
     background: transparent;
     object-fit: fill;
 }
-

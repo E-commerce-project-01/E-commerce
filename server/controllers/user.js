@@ -101,9 +101,9 @@ const login = async (req, res) => {
         }
 
         const token = jwt.sign(//json web token to give a token to the user once they are logged in 
-            { id: user.id, name: user.name, email: user.email },//the token will include these
+            { id: user.id, name: user.name, email: user.email , avatar: user.avatar},//the token will include these
             JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '5h' }
         );
 
         return res.status(200).json({
@@ -112,7 +112,9 @@ const login = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                type: user.type
+                type: user.type,
+                avatar: user.avatar 
+
             },
             token
         });
@@ -123,5 +125,33 @@ const login = async (req, res) => {
     }
 };
 
+const updateAvatar = async (req, res) => {
+    try {
+        const { avatar } = req.body;
+        const token = req.headers.authorization?.split(' ')[1];
+        
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
 
-module.exports = { signup , login};
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.id;
+
+        const user = await db.user.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        await user.update({ avatar });
+
+        res.status(200).json({ 
+            message: 'Avatar updated successfully',
+            avatar: avatar 
+        });
+    } catch (error) {
+        console.error('Error updating avatar:', error);
+        res.status(500).json({ message: 'Error updating avatar' });
+    }
+};
+
+module.exports = { signup, login, updateAvatar };

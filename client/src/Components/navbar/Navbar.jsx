@@ -1,8 +1,10 @@
 import React from 'react';
 import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate =useNavigate()
   return (
     <div className="nav-container">
       <a href="/" className="logo">Logo</a>
@@ -34,6 +36,7 @@ const Navbar = () => {
           <FiShoppingCart size={18} />
         </button>
         <img 
+          onClick={()=>{navigate("/profile")}}
           src="/path-to-your-profile-image.jpg" 
           alt="Profile" 
           className="profile-img"
