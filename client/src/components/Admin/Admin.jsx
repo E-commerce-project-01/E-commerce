@@ -8,26 +8,44 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Admin = () => {
     const [data, setdata] = useState([]);
-    const [productCounts, setProductCounts] = useState({}); 
-
-    const fetchProductCount = async (brandId) => {
+    const [items, setitems] = useState({}); 
+    const [floorprice, setfloorprice] = useState({}); 
+    const handleitems = async (brandId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/products/brand/${brandId}`);
-            setProductCounts(prevCounts => ({
+            const productResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
+            setitems(prevCounts => ({
                 ...prevCounts,
-                [brandId]: response.data.length 
+                [brandId]: productResponse.data.length 
             }));
+            handleprice(items)
+
         } catch (error) {
-            console.error(`Error fetching product count for brand ID ${brandId}:`, error);
+            console.error(`Error fetching price for brand ID ${brandId}:`, error);
         }
     };
+
+    const handleprice = async (brand) => {
+        for (let price in brand) {
+            try {
+                const priceResponse = await axios.get(`http://localhost:3000/api/products/${price}`);
+                const lowestPrice = Math.min(...priceResponse.data.map(item => item.price)); 
+                setfloorprice(prev => ({
+                    ...prev,
+                    [price]: lowestPrice
+                }));
+            } catch (error) {
+                console.error(`Error fetching prices for brand ${price}:`, error);
+            }
+        }
+    }
+
 
     useEffect(() => { 
         axios.get("http://localhost:3000/brands/allbrands")
             .then((res) => {
                 setdata(res.data);
                 res.data.forEach(brand => {
-                    fetchProductCount(brand.id);
+                    handleitems(brand.id);
                 });
             })
             .catch((err) => console.log(err));
@@ -88,18 +106,18 @@ const Admin = () => {
         </tr>
         </thead>
     <tbody>
-        {data.map((item, index) => (
+        {data.map((element, index) => (
             <tr key={index} className="border-b border-gray-700">
-                <td className="py-4 flex items-center space-x-2">
-                    <span className="text-purple-500">{item.id}</span>
-                    <img src={item.logo} alt={`${item.name} logo`} className="w-10 h-10 rounded-full" />
-                    <span>{item.name}</span>
+                <td className="py-4 flex elements-center space-x-2">
+                    <span className="text-purple-500">{element.id}</span>
+                    <img src={element.logo} alt={`${element.name} logo`} className="w-10 h-10 rounded-full" />
+                    <span>{element.name}</span>
                 </td>
-                <td className="py-4">{item.volume}</td>
-                <td className="py-4 text-green-500">{item.day}</td>
-                <td className="py-4">{item.floorprice}</td>
-                <td className="py-4">{item.owner}</td>
-                <td className="py-4">{productCounts[item.id] || 0}</td>
+                <td className="py-4">{element.volume}</td>
+                <td className="py-4 text-green-500">{element.day}</td>
+                <td className="py-4">{floorprice[element.id] || 0}</td>
+                <td className="py-4">{element.owner}</td>
+                <td className="py-4">{items[element.id] || 0}</td>
             </tr>
         ))}
     </tbody>

@@ -22,8 +22,6 @@ const getProductCountsByBrand = async (req, res) => {
         res.status(500).send("Failed to fetch products");
     }
 };
-
-
 const { Op } = require('sequelize');
 const { products } = require('../database/index');
 
