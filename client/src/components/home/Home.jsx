@@ -1,9 +1,17 @@
 import React from 'react';
 import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
 import './Home.css';
+import { useNavigate } from 'react-router-dom'; ///// ahmed
+
 
 const Home = () => {
-  return (
+  ////// ahmed ////////////
+const navigate = useNavigate();
+  const handleexplorenow = () => {
+    navigate ('/products');
+    }
+    /////// ahmed /////////
+      return (
     <div className="home">
       <header className="header">
         <a href="/" className="logo">Logo</a>
@@ -54,7 +62,7 @@ const Home = () => {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit.</p>
             
             <div className="hero-buttons">
-              <button className="explore-btn">Explore Now</button>
+              <button className="explore-btn" onClick={handleexplorenow}>Explore Now</button> {/* ///Ahmed/// */}
               <button className="create-btn">Create</button>
             </div>
 

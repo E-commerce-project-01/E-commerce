@@ -16,7 +16,7 @@ const productsRoute = require("./routes/AllProducts.js")
 
 app.use("/brands" , brandsroute)
 app.use("/user", userRoute); 
-app.use("/api/products", productsRoute);
+app.use("/products", productsRoute);
 
 
 
