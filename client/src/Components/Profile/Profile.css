@@ -12,11 +12,24 @@
 
 .profileHeader {
     position: relative;
-    background: url('https://placehold.co/1200x300') no-repeat center center;
+    background: url('https://res.cloudinary.com/dc9siq9ry/image/upload/v1732300107/abumw2nnrtbtrn0w8hly.avif') no-repeat center center;
+
     background-size: cover;
     height: 300px;
     border-radius: 10px;
-}
+    width: 90%;
+    margin-left: 5%; }
+
+    .profileHeader::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4); 
+        border-radius: 10px;
+    }
 
 .profilePicture {
     position: absolute;
@@ -42,15 +55,16 @@
 
 .uploadAvatarButton {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
+    bottom: -50px;
+    left: 52.5%;
+    transform: translateX(-50%);
+    background: #6c5dd3; 
     color: white;
     padding: 8px;
     border-radius: 50%;
     cursor: pointer;
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,8 +73,7 @@
 }
 
 .uploadAvatarButton:hover {
-    background: rgba(0, 0, 0, 0.95);
-    transform: scale(1.5);
+    background: #6053b9;;
 }
 
 .editProfileButton {
@@ -162,11 +175,11 @@
 }
 
 .metaLook img {
-    width: 60%;
+    width: 50%;
     border-radius: 8px;
     display: block;
     margin: 0 auto;
-    height: 75%;
+    height: 70%;
     margin-bottom: 10px;
 }
 

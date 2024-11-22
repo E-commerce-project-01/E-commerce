@@ -1,7 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; /// ahmed ///
 import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
 import './Navbar.css';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate =useNavigate()
@@ -18,8 +18,8 @@ const Navbar = () => {
           />
         </div>
         <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#explore">Explore <FiChevronDown /></a>
+          <button onClick={() => navigate('/')}>Home</button>
+          <button onClick={() => navigate('/products')}>Explore <FiChevronDown /></button> {/*ahmed*/}
           <a href="#collection">Personal Collection</a>
           <a href="#drops">Drops</a>
           <a href="#more" className="more-link">More <FiChevronDown /></a>

@@ -1,8 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; /// ahmed ////
 import Navbar from '../navbar/Navbar';
 import './Home.css';
 
+
+///ahmed///
 const Home = () => {
+  const navigate = useNavigate();
+/// ahmed ///
   return (
     <div className="home">
       <Navbar />
@@ -18,7 +23,7 @@ const Home = () => {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit.</p>
             
             <div className="hero-buttons">
-              <button className="explore-btn">Explore Now</button>
+              <button className="explore-btn" onClick={() => navigate('/products')}>Explore Now</button> {/*ahmed*/}
               <button className="create-btn">Create</button>
             </div>
 

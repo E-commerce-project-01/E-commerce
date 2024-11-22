@@ -183,3 +183,19 @@
 #email::placeholder {
     color: rgba(255, 255, 255, 0.7); 
 }
+
+
+.swal2-confirm.custom-button {
+    border-radius: 20px; 
+    padding: 15px 30px;  
+    background-color: #3fc3ee;
+    color: white;
+    border: none;
+
+}
+
+.swal2-confirm.custom-button:hover{
+    background:#3fc3ee;
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    }
