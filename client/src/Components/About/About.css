@@ -6,7 +6,6 @@
     padding: 60px 0;
   }
   
-  /* Sections générales */
   .about-section {
     margin-bottom: 120px;
     display: flex;
@@ -24,8 +23,7 @@
     margin-right: auto;
   }
   
-  /* Contenu des sections */
-  .section-content {
+  .section-about {
     flex: 1;
     max-width: 45%;
   }
@@ -79,7 +77,6 @@
     transform: translateY(-2px);
   }
   
-  /* Images empilées */
   .stacked-images {
     position: relative;
     width: 35%;
@@ -118,12 +115,10 @@
   opacity: 0.6;
 }
 
-/* Animation au survol */
 .stacked-images:hover .stacked-image {
     transform: translateX(0) translateY(0) scale(1);
   }
   
-  /* Section Makers */
   .makers-section {
     text-align: center;
   }
@@ -161,7 +156,6 @@
     font-size: 14px;
   }
   
-  /* Media Queries */
   @media (max-width: 1200px) {
     .about-container {
       width: 90%;

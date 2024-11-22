@@ -1,34 +1,29 @@
-import React, { useState } from "react"; // Ajout de useState
+import React, { useState } from "react"; 
 import "./About.css";
 import { teamData } from "./data";
 
 const AboutUs = () => {
-  // États pour gérer l'index de l'image active pour chaque section
   const [activeImageIndex1, setActiveImageIndex1] = useState(0);
   const [activeImageIndex2, setActiveImageIndex2] = useState(0);
 
-  // Images pour la première section (What We Do)
   const images1 = [
     "https://s3-alpha-sig.figma.com/img/3a8d/fac0/26176011b1d617bcf3a940ae9d262418?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IpFqDpvP-AVpOH-BDjT7gmE1L3K2itKxTP7-SrrWcDKtAfW12wxsxjKt~FX9g48IDFfrYh9U8gyq03WkEoLtBGGrqC0rJ5q208nY9rhgtdnvmRbDKN8i11lyWrC1O9IwXWEdm5dpYibUk7B1agWdhnR-en5NOytOhrp-4XL4r-HFhuvJUj2Pm4ImMtAovQIuwFrdtUxqLC8-~0g4P4rIRQsyH~idLXKBpNNlR6iDj4WasmRhmpJAJmBEoQ1GjokBl7UZBZCaJDDMsvQFKpYDiIBNy1aORDZOABdneey4QJj6EOd4FNPlxzL7q-4YcANS~tC6sHZGpitoWn-Mp-q1dg__",
     "https://s3-alpha-sig.figma.com/img/b291/7b1d/203c1d4d9aa123da053c3da9834047bb?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qGt-IUWJsFHHZOT1kitJ7dwHoNaXIQ4brRhOVVIlnPq0Ew9Mv~IEzJ0Ic9JvOgA2inQDfUITkpI~z6Pl8LF~6fo2P8Z7wqk0LxUwQ0qrDZ2Ilq0cYHTm1B3TgXntkUH9SnrdxP6kXF0KES6ktZEh7hiE1F23d6zqqkQsD12sPa5LINqpp5RZKXR0yVkDN5dGvrEWCLSdyw16SE8uUAHd2HSJa6LD2K3N~tfGvZLOiRZz4~w~Cpt4g7FEpSeCgj~R-py76IhPK94xuPIE4FrogK-sJBigAWTcFSEtMt5d2XTcqE59c9j5YXSsIabJIXh9b9-2UtFNVJfc~hQA1CZ5jA__",
     "https://s3-alpha-sig.figma.com/img/7cd7/af66/606eb5e5df1973d0ec9081bdd910fd56?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=NqCAZMWfsRJSxGP2mvwhCIGs8LTiLkOQDqGQesTd7pQKM4gsRR6IPKMzPqhpdD3SVPEaNXL-4Tj-YFHulZKyCBhyajYmyrxn~NHb5TEoviW1akWqMBeExzHr0wPtCK-bJv4xkoOcMdrkpkkVsMQ6QU1PSRSSu5tgsL-n9FPZ~aE5oZ3DQ6EezeHYIS98RWreFpu9JLomaahlIuBZfodWFvLTNQegO84jydRj3WsoEb~pQCYbssYlXDFuQKm0leM424py4ES3Uz~oS82hhg1WK5h3TdYU~5GI4gpccsJOOa6oxAC6lLBTcXN0lKGgEv4Keabn0yEDF6DNkqoE9PUcFw__"
   ];
 
-  // Images pour la deuxième section (When We Started)
   const images2 = [
     "https://s3-alpha-sig.figma.com/img/b291/7b1d/203c1d4d9aa123da053c3da9834047bb?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qGt-IUWJsFHHZOT1kitJ7dwHoNaXIQ4brRhOVVIlnPq0Ew9Mv~IEzJ0Ic9JvOgA2inQDfUITkpI~z6Pl8LF~6fo2P8Z7wqk0LxUwQ0qrDZ2Ilq0cYHTm1B3TgXntkUH9SnrdxP6kXF0KES6ktZEh7hiE1F23d6zqqkQsD12sPa5LINqpp5RZKXR0yVkDN5dGvrEWCLSdyw16SE8uUAHd2HSJa6LD2K3N~tfGvZLOiRZz4~w~Cpt4g7FEpSeCgj~R-py76IhPK94xuPIE4FrogK-sJBigAWTcFSEtMt5d2XTcqE59c9j5YXSsIabJIXh9b9-2UtFNVJfc~hQA1CZ5jA__",
     "https://s3-alpha-sig.figma.com/img/3a8d/fac0/26176011b1d617bcf3a940ae9d262418?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IpFqDpvP-AVpOH-BDjT7gmE1L3K2itKxTP7-SrrWcDKtAfW12wxsxjKt~FX9g48IDFfrYh9U8gyq03WkEoLtBGGrqC0rJ5q208nY9rhgtdnvmRbDKN8i11lyWrC1O9IwXWEdm5dpYibUk7B1agWdhnR-en5NOytOhrp-4XL4r-HFhuvJUj2Pm4ImMtAovQIuwFrdtUxqLC8-~0g4P4rIRQsyH~idLXKBpNNlR6iDj4WasmRhmpJAJmBEoQ1GjokBl7UZBZCaJDDMsvQFKpYDiIBNy1aORDZOABdneey4QJj6EOd4FNPlxzL7q-4YcANS~tC6sHZGpitoWn-Mp-q1dg__",
     "https://s3-alpha-sig.figma.com/img/7cd7/af66/606eb5e5df1973d0ec9081bdd910fd56?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=NqCAZMWfsRJSxGP2mvwhCIGs8LTiLkOQDqGQesTd7pQKM4gsRR6IPKMzPqhpdD3SVPEaNXL-4Tj-YFHulZKyCBhyajYmyrxn~NHb5TEoviW1akWqMBeExzHr0wPtCK-bJv4xkoOcMdrkpkkVsMQ6QU1PSRSSu5tgsL-n9FPZ~aE5oZ3DQ6EezeHYIS98RWreFpu9JLomaahlIuBZfodWFvLTNQegO84jydRj3WsoEb~pQCYbssYlXDFuQKm0leM424py4ES3Uz~oS82hhg1WK5h3TdYU~5GI4gpccsJOOa6oxAC6lLBTcXN0lKGgEv4Keabn0yEDF6DNkqoE9PUcFw__"
   ];
 
-    // Fonction pour changer l'image au clic
     const handleImageClick = (setIndex, currentIndex, maxLength) => {
         setIndex((currentIndex + 1) % maxLength);
       };
     
   return (
     <div className="about-container">
-      {/* Section: Who We Are */}
       <section className="about-section center">
         <h2 className="about-subtitle">About Us</h2>
         <h1 className="about-title">Who we are.</h1>
@@ -41,8 +36,6 @@ const AboutUs = () => {
         <button className="about-button">More +</button>
       </section>
 
-      {/* Section: What We Do */}
-            {/* Section: What We Do */}
             <section className="about-section">
         <div className="section-content left">
           <h2 className="about-subtitle">Since 2014</h2>
@@ -69,7 +62,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Section: When We Started */}
       <section className="about-section">
         <div 
           className="stacked-images left"
@@ -84,7 +76,7 @@ const AboutUs = () => {
             />
           ))}
         </div>
-        <div className="section-content right">
+        <div className="section-about right">
           <h1 className="about-title">When We Started</h1>
           <p className="about-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vulputate tortor ipsum
@@ -95,7 +87,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Section: Our Makers */}
       <section className="about-section center makers-section">
         <h1 className="about-title">Our Makers</h1>
         <p className="about-text">
