@@ -1,106 +1,69 @@
-const db = require("../database/index");
+const db = require('../database');
 const jwt = require('jsonwebtoken');
-const { sequelize } = require('../database/index');
 
-const addToCart = (req, res) => {
-    const { productId } = req.body;
-    const token = req.headers.authorization?.split(' ')[1];
-    
-    if (!token) return res.status(401).json({ message: "Non autorisé - Token manquant" });
+function decodeToken(req, res) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
-    const userId = jwt.verify(token, 'ascefbth,plnihcdxuwy').id;
+  try {
+    return jwt.verify(token, 'ascefbth,plnihcdxuwy');
+  } catch {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+}
 
-    sequelize.transaction().then(transaction => {
-        db.products.findByPk(productId, { transaction })
-            .then(product => {
-                if (!product) throw new Error("Produit non trouvé");
+exports.addToCart = (req, res) => {
+  const decoded = decodeToken(req, res);
+  if (!decoded) return;
 
-                return db.cart.findOrCreate({
-                    where: { UserId: userId },
-                    defaults: { totalItems: 0, totalAmount: 0 },
-                    transaction
-                }).then(([cart]) => {
-                    return db.CartProducts.findOrCreate({
-                        where: { CartId: cart.id, ProductId: productId },
-                        defaults: { quantity: 1, priceAtPurchase: product.price },
-                        transaction
-                    }).then(([cartProduct, created]) => {
-                        if (!created) {
-                            return cartProduct.update({
-                                quantity: cartProduct.quantity + 1
-                            }, { transaction });
-                        }
-                        return cartProduct;
-                    }).then((cartProduct) => {
-                        cart.totalItems += 1;
-                        cart.totalAmount = (parseFloat(cart.totalAmount) + parseFloat(product.price)).toString();
-                        return cart.save({ transaction });
-                    });
-                });
-            })
-            .then(() => transaction.commit())
-            .then(() => res.status(200).json({ message: "Produit ajouté au panier" }))
-            .catch(error => {
-                transaction.rollback();
-                console.error("Erreur détaillée:", error);
-                res.status(500).json({ message: error.message });
-            });
-    });
-};
+  const { productId } = req.body;
 
-const removeFromCart = (req, res) => {
-    const { productId } = req.params;
-    const token = req.headers.authorization?.split(' ')[1];
-    
-    if (!token) return res.status(401).json({ message: "Non autorisé - Token manquant" });
+  db.products.findOne({ where: { id: productId } })
+    .then(product => {
+      if (!product) return res.status(404).json({ message: 'Product not found' });
 
-    const userId = jwt.verify(token, 'ascefbth,plnihcdxuwy').id;
-
-    sequelize.transaction().then(transaction => {
-        return db.cart.findOne({ 
-            where: { UserId: userId },
-            transaction 
-        })
-        .then(cart => {
-            if (!cart) throw new Error("Panier non trouvé");
-
-            return db.CartProducts.findOne({
-                where: { 
-                    CartId: cart.id,
-                    ProductId: productId 
-                },
-                transaction
-            })
-            .then(cartProduct => {
-                if (!cartProduct) throw new Error("Produit non trouvé dans le panier");
-
-                return db.products.findByPk(productId, { transaction })
-                    .then(product => {
-                        // Calculer les nouvelles valeurs
-                        const newTotalItems = Math.max(0, cart.totalItems - cartProduct.quantity);
-                        const newTotalAmount = Math.max(0, 
-                            parseFloat(cart.totalAmount) - 
-                            (parseFloat(product.price) * cartProduct.quantity)
-                        ).toString();
-                        
-                        // Mettre à jour le panier avec les nouvelles valeurs
-                        return Promise.all([
-                            cart.update({
-                                totalItems: newTotalItems,
-                                totalAmount: newTotalAmount
-                            }, { transaction }),
-                            cartProduct.destroy({ transaction })
-                        ]);
-                    });
-            });
-        })
-        .then(() => transaction.commit())
-        .then(() => res.status(200).json({ message: "Produit retiré du panier" }))
-        .catch(error => {
-            transaction.rollback();
-            console.error("Erreur détaillée:", error);
-            res.status(500).json({ message: error.message });
+      db.cart.findOrCreate({ where: { UserId: decoded.id }, defaults: { totalItems: 0, totalAmount: 0 } })
+        .then(([cart]) => {
+          db.CartProducts.findOrCreate({ 
+            where: { CartId: cart.id, ProductId: productId }, 
+            defaults: { quantity: 1, priceAtPurchase: product.price } 
+          }).then(([cartProduct, created]) => {
+            if (!created) cartProduct.quantity++;
+            cart.totalItems++;
+            cart.totalAmount = parseFloat(cart.totalAmount) + parseFloat(product.price);
+            cartProduct.save();
+            cart.save();
+            res.status(200).json({ message: 'Product added to cart' });
+          });
         });
-    });
+    })
+    .catch(() => res.status(500).json({ message: 'Error adding product to cart' }));
 };
-module.exports = { addToCart, removeFromCart };
+
+exports.removeFromCart = (req, res) => {
+  const decoded = decodeToken(req, res);
+  if (!decoded) return;
+
+  const { productId } = req.params;
+
+  db.cart.findOne({ where: { UserId: decoded.id } })
+    .then(cart => {
+      if (!cart) return res.status(404).json({ message: 'Cart not found' });
+
+      db.CartProducts.findOne({ where: { CartId: cart.id, ProductId: productId } })
+        .then(cartProduct => {
+          if (!cartProduct) return res.status(404).json({ message: 'Product not found in cart' });
+
+          db.products.findOne({ where: { id: productId } })
+            .then(product => {
+              const totalPrice = cartProduct.quantity * parseFloat(product.price);
+              cartProduct.destroy();
+              cart.totalItems -= cartProduct.quantity;
+              cart.totalAmount = cart.totalItems === 0 ? 0 : parseFloat(cart.totalAmount) - totalPrice;
+              cart.save();
+              res.status(200).json({ message: 'Product removed from cart' });
+            });
+        });
+    })
+    .catch(() => res.status(500).json({ message: 'Error removing product from cart' }));
+};

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./Sidebar.css";
+import React, { useState } from "react"
+import "./Sidebar.css"
 
 const Sidebar = ({ onFilterChange }) => {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -9,21 +9,24 @@ const Sidebar = ({ onFilterChange }) => {
     status: '',
     onSale: false,
     chains: '',
-  });
-  const [openFilters, setOpenFilters] = useState({});
+  })
+  const [openFilters, setOpenFilters] = useState({})
 
   const handleFilterChange = (key, value) => {
-    const newFilters = { ...selectedFilters, [key]: value };
-    setSelectedFilters(newFilters);
-    onFilterChange(newFilters); // Call the filter function
-  };
+    const newFilters = { 
+      ...selectedFilters, 
+      [key]: selectedFilters[key] === value ? '' : value 
+    }
+    setSelectedFilters(newFilters)
+    onFilterChange(newFilters)
+  }
 
   const toggleFilter = (filter) => {
     setOpenFilters((prevState) => ({
       ...prevState,
       [filter]: !prevState[filter],
-    }));
-  };
+    }))
+  }
 
   return (
     <div className="sidebar">
@@ -89,7 +92,7 @@ const Sidebar = ({ onFilterChange }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
