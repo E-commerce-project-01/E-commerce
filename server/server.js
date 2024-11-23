@@ -20,6 +20,7 @@ const postsRoute = require("./routes/posts.js");
 
 
 
+
 app.use("/brands" , brandsroute)
 app.use("/user", userRoute); 
  

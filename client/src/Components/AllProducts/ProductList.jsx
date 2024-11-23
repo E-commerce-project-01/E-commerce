@@ -4,6 +4,8 @@ import './ProductList.css'
 import Sidebar from './Sidebar/Sidebar'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../navbar/Navbar'
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([])
@@ -70,6 +72,9 @@ const ProductList = () => {
     if (error) return <div className="error">{error}</div>
 
     return (
+        <>
+        <Navbar />
+
         <div className="product-list-container">
             <div className="sidebar-container">
                 <Sidebar onFilterChange={handleFilterChange} />
@@ -78,22 +83,20 @@ const ProductList = () => {
                 <div className="header-bar">
                     <div className="header-left">
                         <div className="total-items">{products.length} items</div>
-                        <button className="cart-button" onClick={() => navigate('/cart')}>
-                            🛒 View Cart
-                        </button>
+
                     </div>
                     <div className="header-filters">
                         <select className="header-filter-button" onChange={handleRarityChange}>
-                            <option value="">All Items</option>
-                            <option value="secret_rare">Secret Rare</option>
-                            <option value="uncommon_rare">Uncommon Rare</option>
-                            <option value="ultra_rare">Ultra Rare</option>
+                            <option value="" className='text'>All Items</option>
+                            <option value="Secret Rare" className='text'>Secret Rare</option>
+                            <option value="Uncommon Rare" className='text'>Uncommon Rare</option>
+                            <option value="Ultra Rare" className='text'>Ultra Rare</option>
                         </select>
                         <select className="header-filter-button" onChange={handleSortChange}>
-                            <option value="">Sort By</option>
-                            <option value="price_asc">Price: Low to High</option>
-                            <option value="price_desc">Price: High to Low</option>
-                            <option value="newest">Newest First</option>
+                            <option value="" className='text'>Sort By</option>
+                            <option value="price_asc" className='text'>Price: Low to High</option>
+                            <option value="price_desc" className='text'>Price: High to Low</option>
+                            <option value="newest" className='text'>Newest First</option>
                         </select>
                     </div>
                 </div>
@@ -129,6 +132,7 @@ const ProductList = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

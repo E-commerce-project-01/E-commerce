@@ -27,13 +27,12 @@ const Profile = () => {
           username: unique
         });
         const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
-        setAvatar(savedAvatar || '/default-avatar.png');
+        setAvatar(savedAvatar);
       } catch (error) {
         console.error("Error decoding token:", error);
-        navigate("/user/login");
       }
     } else {
-      navigate("/user/login");
+      navigate("/");
     }
   }, [navigate]);
 
@@ -46,39 +45,22 @@ const Profile = () => {
       formData.append('cloud_name', 'dc9siq9ry');
 
       axios.post('https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload', formData)
-        .then(data => {
+        .then((data) => {
           const imageUrl = data.data.secure_url;
-          const token = localStorage.getItem('token');
-          axios.put('http://localhost:3000/user/update-avatar', { avatar: imageUrl }, { 
-              headers: { 
-                Authorization: `Bearer ${token}`
-              }
-            })
+          const userId = JSON.parse(localStorage.getItem('user')).id;
+
+          axios.put('http://localhost:3000/user/update-avatar', { userId, avatar: imageUrl })
             .then(() => {
-              localStorage.setItem('userAvatar', imageUrl);
-              const userData = JSON.parse(localStorage.getItem('user')) || {};
-              userData.avatar = imageUrl;
-              localStorage.setItem('user', JSON.stringify(userData));
+              const updatedUser = { ...user, avatar: imageUrl };
+              localStorage.setItem('user', JSON.stringify(updatedUser));
               setAvatar(imageUrl);
             })
             .catch(err => {
               console.error('Error updating avatar:', err);
-              if (err.response && err.response.status === 401) {
-                localStorage.removeItem('token');
-                navigate('/user/login');
-              }
             });
         })
-        .catch(err => {
-          console.error('Error uploading image:', err);
-          if (err.response && err.response.status === 401) {
-            localStorage.removeItem('token');
-            navigate('/user/login');
-          }
-        });
     }
   };
-
   useEffect(() => {
     const fetchPosts = () => {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -96,14 +78,9 @@ const Profile = () => {
     }
   }, [user]);
 
-  const handleCreatePost = () => {
-    navigate('/create-post');
-  };
-
   if (!user) {
     return <div className="loading">Loading profile...</div>;
   }
-
   return (
     <div className="pageWrapper">
       <Navbar />
@@ -111,17 +88,15 @@ const Profile = () => {
         <div className="profileHeader">
           <div className="profilePicture">
             <img
-              src={avatar || '/default-avatar.png'}
+              src={avatar}
               alt="Profile Picture"
-              height="100"
-              width="100"
             />
           </div>
           <div className="uploadAvatarButton" onClick={() => document.getElementById('avatar-upload').click()}>
             <FontAwesomeIcon icon={faCamera} />
           </div>
           <div className="profileActions">
-            <div className="createPostButton" onClick={handleCreatePost}>
+            <div className="createPostButton" onClick={()=>{navigate('/create-post')}}>
               <FontAwesomeIcon icon={faPlus} /> Create Post
             </div>
             <div className="editProfileButton">

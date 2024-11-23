@@ -8,13 +8,11 @@ const CreatePost = () => {
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
       const decodedToken = jwtDecode(token);
-      
       const postData = {
         content,
         image,

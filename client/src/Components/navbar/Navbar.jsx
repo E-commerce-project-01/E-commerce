@@ -42,8 +42,8 @@ const Navbar = () => {
         <button className="icon-button">
           <FiMessageSquare size={20} />
         </button>
-        <button className="wallet-btn">
-          <FiShoppingCart size={18} />
+        <button className="wallet-btn" onClick={() => navigate('/cart')}>
+        <FiShoppingCart size={18} />
         </button>
         <img 
           onClick={() => navigate("/profile")}
