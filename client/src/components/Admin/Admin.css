@@ -85,7 +85,7 @@ body {
 }
 
 .space-x-4 > :not(:last-child) {
-    margin-right: 1rem;
+    margin-left: 60rem;
 }
 
 .space-y-1 > :not(:last-child) {
