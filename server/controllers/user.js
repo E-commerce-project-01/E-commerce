@@ -100,8 +100,10 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });//if the password is not the same, it displays an error 
         }
 
+        const fullName = `${user.firstName} ${user.lastName}`;
+
         const token = jwt.sign(//json web token to give a token to the user once they are logged in 
-            { id: user.id, name: user.name, email: user.email , avatar: user.avatar},//the token will include these
+            { id: user.id, name: fullName, email: user.email , avatar: user.avatar},//the token will include these
             JWT_SECRET,
             { expiresIn: '5h' }
         );
@@ -110,7 +112,7 @@ const login = async (req, res) => {
             message: 'Login successful',
             user: {
                 id: user.id,
-                name: user.name,
+                name: fullName,
                 email: user.email,
                 type: user.type,
                 avatar: user.avatar 

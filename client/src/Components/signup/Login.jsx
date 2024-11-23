@@ -51,7 +51,7 @@ const Login = () => {
             icon: 'info',
             title: 'Stay Tuned!',
             text: `${platform} login will be available soon. We're working on it!`,
-            background: 'rgba(255, 255, 255, 0.1)', 
+            background: 'rgba(255, 255, 255, 0.12)', 
             color: 'white',
             confirmButtonText: 'Got it!',
             customClass: {

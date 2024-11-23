@@ -7,8 +7,6 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-
-
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -21,16 +19,14 @@ const Profile = () => {
       try {
         const decodedToken = jwtDecode(token);
         const userData = JSON.parse(localStorage.getItem('user')) || {};
-        const fullName = localStorage.getItem('fullName') || decodedToken.fullName || 'Unknown';
+        const fullName = userData.name || decodedToken.name || 'Unknown';
         const unique = fullName.split(' ')[0].toLowerCase();
-        
         setUser({
           id: decodedToken.id,
           name: fullName,
           username: unique
         });
-        
-        const savedAvatar = userData.avatar || localStorage.getItem('userAvatar');
+        const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
         setAvatar(savedAvatar || '/default-avatar.png');
       } catch (error) {
         console.error("Error decoding token:", error);
@@ -41,57 +37,58 @@ const Profile = () => {
     }
   }, [navigate]);
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'speakeasy');
       formData.append('cloud_name', 'dc9siq9ry');
-      try {
-        const uploadRes = await axios.post(
-          'https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload',
-          formData
-        );
-        const imageUrl = uploadRes.data.secure_url;
-        
-        const token = localStorage.getItem('token');
-        await axios.put(
-          'http://localhost:3000/user/update-avatar',
-          { avatar: imageUrl },
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}` 
-            } 
+
+      axios.post('https://api.cloudinary.com/v1_1/dc9siq9ry/image/upload', formData)
+        .then(data => {
+          const imageUrl = data.data.secure_url;
+          const token = localStorage.getItem('token');
+          axios.put('http://localhost:3000/user/update-avatar', { avatar: imageUrl }, { 
+              headers: { 
+                Authorization: `Bearer ${token}`
+              }
+            })
+            .then(() => {
+              localStorage.setItem('userAvatar', imageUrl);
+              const userData = JSON.parse(localStorage.getItem('user')) || {};
+              userData.avatar = imageUrl;
+              localStorage.setItem('user', JSON.stringify(userData));
+              setAvatar(imageUrl);
+            })
+            .catch(err => {
+              console.error('Error updating avatar:', err);
+              if (err.response && err.response.status === 401) {
+                localStorage.removeItem('token');
+                navigate('/user/login');
+              }
+            });
+        })
+        .catch(err => {
+          console.error('Error uploading image:', err);
+          if (err.response && err.response.status === 401) {
+            localStorage.removeItem('token');
+            navigate('/user/login');
           }
-        );
-        
-        localStorage.setItem('userAvatar', imageUrl);
-        
-        const userData = JSON.parse(localStorage.getItem('user')) || {};
-        userData.avatar = imageUrl;
-        localStorage.setItem('user', JSON.stringify(userData));
-        
-        setAvatar(imageUrl);
-      } catch (err) {
-        console.error('Error uploading image:', err);
-        if (err.response && err.response.status === 401) {
-          localStorage.removeItem('token');
-          navigate('/user/login');
-        }
-      }
+        });
     }
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const response = await axios.get(`http://localhost:3000/posts/user/${user.id}`);
-        setPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
+    const fetchPosts = () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      axios.get(`http://localhost:3000/posts/user/${user.id}`)
+        .then(response => {
+          setPosts(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching posts:', error);
+        });
     };
 
     if (user) {
@@ -121,8 +118,8 @@ const Profile = () => {
             />
           </div>
           <div className="uploadAvatarButton" onClick={() => document.getElementById('avatar-upload').click()}>
-              <FontAwesomeIcon icon={faCamera} />
-            </div>
+            <FontAwesomeIcon icon={faCamera} />
+          </div>
           <div className="profileActions">
             <div className="createPostButton" onClick={handleCreatePost}>
               <FontAwesomeIcon icon={faPlus} /> Create Post
@@ -218,7 +215,6 @@ const Profile = () => {
           id="avatar-upload" 
           style={{ display: 'none' }} 
           onChange={handleFileChange}
-          accept="image/*"
         />
       </div>
     </div>

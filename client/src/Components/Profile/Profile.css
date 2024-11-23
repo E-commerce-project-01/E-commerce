@@ -3,7 +3,6 @@
     font-family: Arial, sans-serif;
 }
 
-
 .profilePage {
     width: 80%;
     margin: 0 auto;
@@ -13,23 +12,23 @@
 .profileHeader {
     position: relative;
     background: url('https://res.cloudinary.com/dc9siq9ry/image/upload/v1732300107/abumw2nnrtbtrn0w8hly.avif') no-repeat center center;
-
     background-size: cover;
     height: 300px;
     border-radius: 10px;
     width: 90%;
-    margin-left: 5%; }
+    margin-left: 5%;
+}
 
-    .profileHeader::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4); 
-        border-radius: 10px;
-    }
+.profileHeader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
 
 .profilePicture {
     position: absolute;
@@ -58,7 +57,7 @@
     bottom: -50px;
     left: 52.5%;
     transform: translateX(-50%);
-    background: #6c5dd3; 
+    background: #6c5dd3;
     color: white;
     padding: 8px;
     border-radius: 50%;
@@ -73,11 +72,11 @@
 }
 
 .uploadAvatarButton:hover {
-    background: #6053b9;;
+    background: #6053b9;
 }
 
 .editProfileButton {
-    background: linear-gradient(to left, #a64efa , 60% ,  #6222cf);
+    background: linear-gradient(to left, #a64efa, 60%, #6222cf);
     color: white;
     padding: 10px 20px;
     border-radius: 20px;
@@ -86,6 +85,19 @@
 }
 
 .editProfileButton:hover {
+    transform: scale(1.1);
+}
+
+.cancelEditProfileButton {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.cancelEditProfileButton:hover {
     transform: scale(1.1);
 }
 
@@ -191,7 +203,8 @@
     gap: 10px;
 }
 
-#minusButton, #plusButton {
+#minusButton,
+#plusButton {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -312,8 +325,7 @@
 
 .createPostButton {
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(107, 107, 107, 0.37); /* Transparent background */
-    backdrop-filter: blur(0px);
+    background: rgba(107, 107, 107, 0.37);
     color: white;
     padding: 10px;
     border-radius: 20px;
@@ -323,11 +335,11 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    transition:transform 0.4s ease
+    transition: transform 0.4s ease;
 }
 
 .createPostButton:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 .CreatedPostAvatar {
@@ -346,4 +358,19 @@
     margin-left: -4%;
     background: transparent;
     object-fit: fill;
+}
+
+.editdescriptionPlace {
+    width: 100%;
+    padding: 4px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    resize: none;
+    min-height: 100px;
 }
