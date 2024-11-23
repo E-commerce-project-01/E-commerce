@@ -1,10 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const posts = sequelize.define('posts', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
     content: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -13,17 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    userId: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
+        model: 'Users',
         key: 'id'
       }
     }
   }, {
-    timestamps: true
+    timestamps: false
   });
-
   return posts;
 };
