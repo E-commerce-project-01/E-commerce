@@ -115,6 +115,30 @@
     object-fit: cover;
     cursor: pointer;
 }
+.nav-links button {
+    background: none;
+    border: none;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    padding: 0;
+}
+.nav-links button:hover {
+    opacity: 1;
+}
+
+.nav-links .more-link {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+
 
 @media (max-width: 768px) {
     .nav-container {

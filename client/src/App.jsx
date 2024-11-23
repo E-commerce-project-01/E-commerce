@@ -15,24 +15,13 @@ import CreatePost from './Components/Profile/CreatePost.jsx';
 import Profile from './Components/Profile/Profile.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
  
-function App() {
 
 
 
 function App() {
   return (
-    <Router>
 
-      <Routes>
-        <Route path="/user/signup" element={<Signup />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/about" element={<AboutUs />} />
-      </Routes>
-    </Router>
-  );
+
 
     <Routes>
      <Route path="/user/signup" element={<Signup />} />
@@ -40,13 +29,11 @@ function App() {
      <Route path="/home" element={<Home />} />
      <Route path="/products" element={<Products />} />  
      <Route path="/cart" element={<Cart />} />
-
-
+     <Route path="/about" element={<AboutUs />} />
      <Route path="/profile" element={<Profile />} />
      <Route path="/create-post" element={<CreatePost />} />
- 
      </Routes>
-   </Router>
+   
       
   )
 }
