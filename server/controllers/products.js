@@ -1,6 +1,6 @@
 const db = require("../database/index");
 
-const getProductCountsByBrand = async (req, res) => {
+const getProductbybrand = async (req, res) => {
     const brandId = req.params.brandId; // Get the brand ID from the request parameters
 
     try {
@@ -89,5 +89,5 @@ const getFilteredProducts = (req, res) => {
 }
 
 module.exports = {
-    getFilteredProducts,getProductCountsByBrand
+    getFilteredProducts,getProductbybrand
 };

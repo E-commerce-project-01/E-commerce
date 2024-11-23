@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-
+import Swal from 'sweetalert2';
+import  "../signup/Login.css"
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isEmailStep, setIsEmailStep] = useState(true); // toggle between email and password
+    const [isEmailStep, setIsEmailStep] = useState(true); 
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         
-        // if it's the email step, switch to the password step
         if (isEmailStep) {
             setIsEmailStep(false);
         } else {
@@ -28,8 +28,10 @@ const Login = () => {
                     const { token, user } = response.data;
                     localStorage.setItem("token", token);
                     localStorage.setItem("user", JSON.stringify(user));
-                        navigate("/home");
-                        window.location.reload();
+                    localStorage.setItem('userAvatar', response.data.user.avatar);
+
+                    navigate("/home");
+                    window.location.reload();
                     setError("");
                 }
             } catch (err) {
@@ -42,6 +44,23 @@ const Login = () => {
             }
         }
     };
+
+    const handleSocialLogin = (platform) => {
+        Swal.fire({
+            icon: 'info',
+            title: 'Stay Tuned!',
+            text: `${platform} login will be available soon. We're working on it!`,
+            background: 'rgba(255, 255, 255, 0.12)', 
+            color: 'white',
+            confirmButtonText: 'Got it!',
+            customClass: {
+                title: 'swal-title',
+                content: 'swal-content',
+                confirmButton: 'custom-button',
+            }
+        });
+    };
+    
 
     return (
         <div className="login-container">
@@ -65,7 +84,6 @@ const Login = () => {
                     </p>
                 </div>
 
-                {/* email */}
                 {isEmailStep ? (
                     <div>
                         <input
@@ -77,12 +95,10 @@ const Login = () => {
                             placeholder="Email Address"
                             required
                             autoComplete='off'
-
                         />
                     </div>
                 ) : (
                     <div className="password-container">
-                        {/* password  */}
                         <input
                             type="password"
                             id="password"
@@ -96,7 +112,6 @@ const Login = () => {
                     </div>
                 )}
 
-                {/* error message */}
                 {error && (
                     <div className="error-message">
                         <p>{error}</p>
@@ -111,12 +126,17 @@ const Login = () => {
                     <p style={{"marginBottom" : "-2px"}}>Or</p>
                 </div>
 
-                {/*social media buttons */}
                 <div className="social-buttons">
-                    <button className="social-button google-button">
+                    <button
+                        className="social-button google-button"
+                        onClick={() => handleSocialLogin('Google')}
+                    >
                         <FaGoogle style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Google
                     </button>
-                    <button className="social-button facebook-button">
+                    <button
+                        className="social-button facebook-button"
+                        onClick={() => handleSocialLogin('Facebook')}
+                    >
                         <FaFacebook style={{ marginRight: '10px', fontSize: '24px' }} /> Continue with Facebook
                     </button>
                 </div>

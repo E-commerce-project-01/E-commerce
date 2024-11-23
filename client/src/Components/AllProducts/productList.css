@@ -153,18 +153,18 @@
 }
 
 .rarity-badge.secret-rare {
-    background-color: #8b5cf6;
-    color: #fff;
+    /* background-color: #8b5cf6; */
+    color: #808080;
 }
 
 .rarity-badge.uncommon-rare {
-    background-color: #fb7185;
-    color: #fff;
+    /* background-color: #fb7185; */
+    color: #808080;
 }
 
 .rarity-badge.ultra-rare {
-    background-color: #10b981;
-    color: #fff;
+    /* background-color: #10b981; */
+    color: #808080;
 }
 
 .like-button {

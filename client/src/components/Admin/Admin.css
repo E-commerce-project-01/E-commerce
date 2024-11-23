@@ -1,8 +1,4 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #5c373c 0%, #181e41);
-    color: white;
-}
+
 
 .min-h-screen {
     min-height: 100vh;

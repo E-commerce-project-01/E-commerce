@@ -1,13 +1,16 @@
 import React, {useEffect,useState} from 'react';
 import axios from 'axios'
 import './Admin.css'; // Import the CSS file
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Admin = () => {
     const navigate=useNavigate()
     const [data, setdata] = useState([]);
     const [items, setitems] = useState({}); 
     const [floorprice, setfloorprice] = useState({}); 
+    const location = useLocation(); // Get the location object
     const handleitems = async (brandId) => {
         try {
             const productResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
@@ -15,39 +18,45 @@ const Admin = () => {
                 ...prevCounts,
                 [brandId]: productResponse.data.length 
             }));
-            handleprice(items)
-
+            await handleprice(brandId);
         } catch (error) {
             console.error(`Error fetching price for brand ID ${brandId}:`, error);
         }
     };
 
-    const handleprice = async (brand) => {
-        for (let price in brand) {
-            try {
-                const priceResponse = await axios.get(`http://localhost:3000/api/products/${price}`);
-                const lowestPrice = Math.min(...priceResponse.data.map(item => item.price)); 
-                setfloorprice(prev => ({
-                    ...prev,
-                    [price]: lowestPrice
-                }));
-            } catch (error) {
-                console.error(`Error fetching prices for brand ${price}:`, error);
-            }
+    const handleprice = async (brandId) => {
+        try {
+            const priceResponse = await axios.get(`http://localhost:3000/api/products/${brandId}`);
+            const lowestPrice = Math.min(...priceResponse.data.map(item => item.price)); 
+            setfloorprice(prev => ({
+                ...prev,
+                [brandId]: lowestPrice
+            }));
+        } catch (error) {
+            console.error(`Error fetching prices for brand ${brandId}:`, error);
         }
-    }
+    };
 
-
-    useEffect(() => { 
-        axios.get("http://localhost:3000/brands/allbrands")
-            .then((res) => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get("http://localhost:3000/brands/allbrands");
                 setdata(res.data);
                 res.data.forEach(brand => {
                     handleitems(brand.id);
                 });
-            })
-            .catch((err) => console.log(err));
-    }, []);
+            } catch (error) {
+                console.error("Error fetching brands:", error);
+            }
+        };
+
+        fetchData(); // Fetch data on component mount
+
+        // Check if the state indicates an update
+        if (location.state && location.state.updated) {
+            fetchData(); // Fetch data again if updated
+        }
+    }, [location.state]); 
 
 
     return (
@@ -105,10 +114,13 @@ const Admin = () => {
     <tbody>
         {data.map((element, index) => (
             <tr key={index} className="border-b border-gray-700">
-                <td className="py-4 flex elements-center space-x-2">
+                <td className="py-4 flex items-center space-x-2">
                     <span className="text-purple-500">{element.id}</span>
                     <img src={element.logo} alt={`${element.name} logo`} className="w-10 h-10 rounded-full" />
                     <span>{element.name}</span>
+                    {element.verified === 1 && (
+                        <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#0047ff' }} />
+                    )}
                 </td>
                 <td className="py-4">{element.volume}</td>
                 <td className="py-4 text-green-500">{element.day}</td>
