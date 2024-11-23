@@ -1,8 +1,10 @@
 import React, {useEffect,useState} from 'react';
 import axios from 'axios'
 import './Admin.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
+    const navigate=useNavigate()
     const [data, setdata] = useState([]);
     const [items, setitems] = useState({}); 
     const [floorprice, setfloorprice] = useState({}); 
@@ -57,26 +59,35 @@ const Admin = () => {
                     
                     <div className="flex justify-between items-center mb-8">
                     <button
-    style={{
-        background: 'linear-gradient(90deg, #a445f7, #6a00ff)',
-        border: 'none',
-        borderRadius: '8px',
-        color: 'white',
-        padding: '10px 20px',
-        fontSize: '14px',
-        fontFamily: 'Arial, sans-serif',
-        cursor: 'pointer'
-    }}
->
-    Marketplace Performance
-</button>
+                        style={{
+                                background: 'linear-gradient(90deg, #a445f7, #6a00ff)',
+                                border: 'none',
+                                borderRadius: '8px',
+                                color: 'white',
+                                padding: '10px 20px',
+                                fontSize: '14px',
+                                fontFamily: 'Arial, sans-serif',
+                                cursor: 'pointer'
+                                }}>
+                    Marketplace Performance
+                    </button>
            <div className="flex items-center space-x-4 ml-4 justify-end"> 
                   <select className="px-4 py-2 bg-gray-800 rounded-full text-white">
                   <option>Last 7 Days</option>
                   </select>
-                  <select className="px-4 py-2 bg-gray-800 rounded-full text-white">
-                  <option>All Categories</option>
-                  </select>
+                  <button
+                        style={{
+                                background: 'linear-gradient(90deg, #a445f7, #6a00ff)',
+                                border: 'none',
+                                borderRadius: '8px',
+                                color: 'white',
+                                padding: '10px 20px',
+                                fontSize: '14px',
+                                fontFamily: 'Arial, sans-serif',
+                                cursor: 'pointer'
+                                }} onClick={()=>navigate("/brandsAdmin")}>
+                    Brands
+                    </button>
             </div>
                     </div>       
                 </div>

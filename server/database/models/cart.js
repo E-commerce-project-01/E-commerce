@@ -1,25 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
     const cart = sequelize.define('cart', {
-        // Track total number of items in the cart
+        UserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'users',
+                key: 'id'
+            }
+        },
         totalItems: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0  // Can't have negative items
+                min: 0
             }
         },
-        // Track total monetary amount in the cart
         totalAmount: {
-            type: DataTypes.DECIMAL(10, 2),  // 10 digits with 2 decimal places for currency
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0  // Can't have negative amount
+                min: 0
             }
         }
     }, {
-        timestamps: true  // Tracks createdAt and updatedAt
+        timestamps: true
     });
     return cart;
 };

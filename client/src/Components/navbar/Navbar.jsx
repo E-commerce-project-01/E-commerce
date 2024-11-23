@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
 import './Navbar.css';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="nav-container">
       <a href="/" className="logo">Logo</a>
@@ -16,11 +19,11 @@ const Navbar = () => {
           />
         </div>
         <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#explore">Explore <FiChevronDown /></a>
+          <button onClick={() => navigate('/')}>Home</button>
+          <button onClick={() => navigate('/products')}>Explore <FiChevronDown /></button>
           <a href="#collection">Personal Collection</a>
           <a href="#drops">Drops</a>
-          <a href="#more" className="more-link">More <FiChevronDown /></a>
+          <button onClick={() => navigate('/about')} className="more-link">More <FiChevronDown /></button> 
         </nav>
       </div>
       <div className="nav-right">

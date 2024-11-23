@@ -23,15 +23,27 @@ db.brands = require("./models/brands")(sequelize , Sequelize)
 db.cart = require("./models/cart")(sequelize , Sequelize)
 db.products = require("./models/products")(sequelize , Sequelize)
 db.user = require("./models/user")(sequelize , Sequelize)
+ 
+db.CartProducts = require("./models/cartProducts")(sequelize, Sequelize)
+
 db.posts = require("./models/posts")(sequelize, Sequelize)
+ 
 
 
-db.user.hasOne(db.cart)
-db.cart.belongsTo(db.user)
+db.user.hasOne(db.cart);
+db.cart.belongsTo(db.user);
 
-db.cart.belongsToMany(db.products, { through: 'CartProducts' })
-db.products.belongsToMany(db.cart, { through: 'CartProducts' })
+db.cart.belongsToMany(db.products, { 
+  through: db.CartProducts,
+  foreignKey: 'CartId',
+  otherKey: 'ProductId'
+});
 
+db.products.belongsToMany(db.cart, { 
+  through: db.CartProducts,
+  foreignKey: 'ProductId',
+  otherKey: 'CartId'
+});
 db.brands.hasMany(db.products)
 db.products.belongsTo(db.brands)
 
