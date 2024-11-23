@@ -1,9 +1,12 @@
-module.exports = (sequelize, DataTypes) => {
-    const Brands = sequelize.define('Brands', {
+module.exports =  (sequelize , DataTypes)  => {
+    const brands = sequelize.define('brands', {
+    
         name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+    
+    
         volume: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -12,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false,
         },
+    
         floorprice: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -25,21 +29,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         verified: {
-            type: DataTypes.BOOLEAN, // Changed to BOOLEAN
+            type: DataTypes.TINYINT(0),
             allowNull: true,
         },
         items: {
             type: DataTypes.TEXT,
             allowNull: true,
+    
         },
-        UserId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'users',
-                key: 'id'
-            }
-        },
-    }, { timestamps: false });
-    return Brands;
-};
+    } , { timestamps: false })
+    return brands
+    }
+    

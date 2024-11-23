@@ -54,11 +54,11 @@ db.posts.belongsTo(db.user)
 
 
 
-  sequelize.sync({alter : true}).then(() => {
- console.log(' table created successfully!');
- }).catch((error) => {
-  console.error('Unable to create table : ', error);
- });
+//   sequelize.sync({alter : true}).then(() => {
+//  console.log(' table created successfully!');
+//  }).catch((error) => {
+//   console.error('Unable to create table : ', error);
+//  });
 
 
 module.exports= db

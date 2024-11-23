@@ -1,29 +1,41 @@
 module.exports = (sequelize, DataTypes) => {
     const CartProducts = sequelize.define('CartProducts', {
-        // Quantity of specific product in cart
+        CartId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'carts',
+                key: 'id'
+            }
+        },
+        ProductId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Products',
+                key: 'id'
+            }
+        },
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1,
             validate: {
-                min: 1  // Must have at least one item
+                min: 1
             }
         },
-        // Store price at time of purchase
         priceAtPurchase: {
             type: DataTypes.DECIMAL(10, 2),
-            allowNull: false,
-            validate: {
-                min: 0
-            }
-        },
-        // When the product was added to cart
-        purchaseDate: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
+            allowNull: false
         }
     }, {
-        timestamps: true  // Tracks createdAt and updatedAt
+        timestamps: false,
+        indexes: [
+            {
+                unique: true,
+                fields: ['CartId', 'ProductId']
+            }
+        ]
     });
 
     return CartProducts;

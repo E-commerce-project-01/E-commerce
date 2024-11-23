@@ -1,40 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
-    const Cart = sequelize.define('cart', {
-        // Ajoutez une clé étrangère pour l'utilisateur
-        userId: {
+    const cart = sequelize.define('cart', {
+        UserId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users', // Le nom de la table des utilisateurs
-                key: 'id' // La clé primaire de la table des utilisateurs
+                model: 'Users',
+                key: 'id'
             }
         },
-        // Track total number of items in the cart
         totalItems: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0  // Can't have negative items
+                min: 0
             }
         },
-        // Track total monetary amount in the cart
         totalAmount: {
-            type: DataTypes.DECIMAL(10, 2),  // 10 digits with 2 decimal places for currency
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0  // Can't have negative amount
+                min: 0
             }
         }
     }, {
-        timestamps: true  // Tracks createdAt and updatedAt
+        timestamps: false
     });
-
-    // Définir la relation avec le modèle User
-    Cart.associate = (models) => {
-        Cart.belongsTo(models.Users, { foreignKey: 'userId' });
-    };
-
-    return Cart;
+    return cart;
 };

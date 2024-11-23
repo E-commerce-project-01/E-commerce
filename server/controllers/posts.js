@@ -6,7 +6,7 @@ exports.createPost = async (req, res) => {
     const post = await db.posts.create({
       content,
       image,
-      userId
+      UserId: userId
     });
     res.status(201).json(post);
   } catch (error) {
@@ -19,7 +19,7 @@ exports.getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
     const posts = await db.posts.findAll({
-      where: { userId }
+      where: { UserId: userId }
     });
     res.status(200).json(posts);
   } catch (error) {
