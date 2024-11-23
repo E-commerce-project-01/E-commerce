@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
             validate: {
-                min: 0
+                min: 0  
             }
         },
         image: {
             type: DataTypes.STRING(10000),
             allowNull: false,
             validate: {
-                isUrl: true
+                isUrl: true  
             }
         },
         status: {
@@ -44,11 +44,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0
+                min: 0  
             }
         }
     }, {
-        timestamps: false
+        timestamps: false  
     });
     return Product;
 };

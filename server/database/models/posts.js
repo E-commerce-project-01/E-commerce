@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const posts = sequelize.define('posts', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     content: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -19,5 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false
   });
+
   return posts;
 };
