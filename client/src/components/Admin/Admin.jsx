@@ -67,34 +67,14 @@ const Admin = () => {
                 <div className="flex justify-center mb-8">
                     
                     <div className="flex justify-between items-center mb-8">
-                    <button
-                        style={{
-                                background: 'linear-gradient(90deg, #a445f7, #6a00ff)',
-                                border: 'none',
-                                borderRadius: '8px',
-                                color: 'white',
-                                padding: '10px 20px',
-                                fontSize: '14px',
-                                fontFamily: 'Arial, sans-serif',
-                                cursor: 'pointer'
-                                }}>
+                    <button className="marketplace-button">
                     Marketplace Performance
                     </button>
            <div className="flex items-center space-x-4 ml-4 justify-end"> 
-                  <select className="px-4 py-2 bg-gray-800 rounded-full text-white">
-                  <option>Last 7 Days</option>
-                  </select>
-                  <button
-                        style={{
-                                background: 'linear-gradient(90deg, #a445f7, #6a00ff)',
-                                border: 'none',
-                                borderRadius: '8px',
-                                color: 'white',
-                                padding: '10px 20px',
-                                fontSize: '14px',
-                                fontFamily: 'Arial, sans-serif',
-                                cursor: 'pointer'
-                                }} onClick={()=>navigate("/brandsAdmin")}>
+           <button className="brands-button space-x-4" onClick={()=>navigate("/UsersAdmin")}>
+                    Users
+                    </button>
+                  <button className="brands-button" onClick={()=>navigate("/brandsAdmin")}>
                     Brands
                     </button>
             </div>

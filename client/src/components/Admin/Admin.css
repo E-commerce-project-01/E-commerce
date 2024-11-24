@@ -201,3 +201,24 @@ footer p {
     max-width: 300px; 
     line-height: 1.5; 
 }
+.marketplace-button {
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+.brands-button {
+    background: linear-gradient(90deg, #a445f7, #6a00ff);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}

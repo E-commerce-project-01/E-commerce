@@ -88,6 +88,50 @@ const getFilteredProducts = (req, res) => {
         })
 }
 
+const incrementownercount = async (req, res) => {
+    const { productId } = req.params; 
+
+    try {
+        
+        const product = await db.products.findByPk(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+
+        const brandId = product.brandId; 
+
+        
+        await db.brands.increment('owner', { where: { id: brandId } });
+
+        res.status(200).json({ message: "Owner count incremented successfully." });
+    } catch (error) {
+        console.error("Error incrementing owner count:", error);
+        res.status(500).send("Failed to increment owner count");
+    }
+};
+
+const decrementownercount = async (req, res) => {
+    const { productId } = req.params; // Get the product ID from the request parameters
+
+    try {
+        // Find the product by ID to get the associated brand ID
+        const product = await db.products.findByPk(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+
+        const brandId = product.brandId; // Get the brand ID from the product
+
+        // Decrement the owner count in the brands table
+        await db.brands.decrement('owner', { where: { id: brandId } });
+
+        res.status(200).json({ message: "Owner count decremented successfully." });
+    } catch (error) {
+        console.error("Error decrementing owner count:", error);
+        res.status(500).send("Failed to decrement owner count");
+    }
+};
+
 module.exports = {
-    getFilteredProducts,getProductbybrand
+    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount
 };

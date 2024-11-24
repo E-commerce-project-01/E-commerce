@@ -34,7 +34,7 @@ const BrandAdmin = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
-                navigate("/", { state: { updated: true } });
+                navigate("/Admin", { state: { updated: true } });
             })
             .catch((err) => {
                 console.error("Error updating brand verification status:", err);
@@ -77,6 +77,9 @@ const BrandAdmin = () => {
                     </div>
                 </div>
             ))}
+             <button className="Users" onClick={() => navigate("/Admin")}>
+                Back
+            </button>
         </div>
     );
 };

@@ -10,15 +10,20 @@ import CreatePost from './Components/Profile/CreatePost.jsx';
 import Profile from './Components/Profile/Profile.jsx';
 import BrandAdmin from './components/Admin/BrandsAdmin.jsx';
 import BrandProducts from './components/Admin/Brandproducts.jsx';
+import UsersAdmin from './components/Admin/UsersAdmin.jsx';
+import Userdetails from './components/Admin/Userdetails.jsx';
 import "./App.css"
 const App = () => {
   return (
     <Router>
       <Routes>
-       <Route path="/" element={<Cart />} />
+       <Route path="/Admin" element={<Admin />} />
        <Route path="/brandsAdmin" element={<BrandAdmin />} />
        <Route path="/adminbrandproducts" element={<BrandProducts />} />
+       <Route path="/UsersAdmin" element={<UsersAdmin />} />
+       <Route path="/userdetails" element={<Userdetails />} />
 
+       
         {/* <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />} />

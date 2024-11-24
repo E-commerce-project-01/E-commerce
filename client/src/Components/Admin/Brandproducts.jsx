@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import '../Admin/Brandproducts.css'; // Import your CSS for styling
 
 const BrandProducts = () => {
+    const navigate=useNavigate()
     const location = useLocation();
     const { brandId } = location.state; // Get the brand ID from the state
     const [products, setProducts] = useState([]);
@@ -30,6 +31,9 @@ const BrandProducts = () => {
                     <p className="product-price">${product.price}</p>
                 </div>
             ))}
+            <button className="Users" onClick={() => navigate("/brandsAdmin")}>
+                Back
+            </button>
         </div>
     );
 };
