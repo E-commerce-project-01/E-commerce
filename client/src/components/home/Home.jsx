@@ -1,8 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; /// ahmed ////
 import Navbar from '../navbar/Navbar';
 import './Home.css';
 
+
+///ahmed///
 const Home = () => {
+  const navigate = useNavigate();
+/// ahmed ///
   return (
     <div className="home">
       <Navbar />
@@ -18,7 +23,7 @@ const Home = () => {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit.</p>
             
             <div className="hero-buttons">
-              <button className="explore-btn">Explore Now</button>
+              <button className="explore-btn" onClick={() => navigate('/products')}>Explore Now</button> {/*ahmed*/}
               <button className="create-btn">Create</button>
             </div>
 
@@ -40,33 +45,33 @@ const Home = () => {
 
           <div className="gallery">
             <div className="gallery-item small">
-              <img src="/shoes-purple.jpg" alt="Purple Shoes" />
+              <img src="/src/assets/home-pictures/5.png" alt="Purple Shoes" />
             </div>
             <div className="gallery-item small">
-              <img src="/shoes-yellow.jpg" alt="Yellow Shoes" />
+              <img src="/src/assets/home-pictures/6.png" alt="Yellow Shoes" />
             </div>
             <div className="gallery-item tall">
-              <img src="/dress-gold.jpg" alt="Gold Dress" />
+              <img src="/src/assets/home-pictures/7.png" alt="Gold Dress" />
             </div>
             <div className="gallery-item medium">
-              <img src="/jacket-blue.jpg" alt="Blue Jacket" />
+              <img src="/src/assets/home-pictures/3.png" alt="Blue Jacket" />
             </div>
             <div className="gallery-item medium">
-              <img src="/shoes-display.jpg" alt="Shoes Display" />
+              <img src="/src/assets/home-pictures/4.png" alt="Shoes Display" />
             </div>
             <div className="gallery-item small">
-              <img src="/shoes-green.jpg" alt="Green Shoes" />
+              <img src="/src/assets/home-pictures/2.png" alt="Green Shoes" />
             </div>
             <div className="gallery-item small">
-              <img src="/character.jpg" alt="Character" />
+              <img src="/src/assets/home-pictures/1.png" alt="Character" />
             </div>
           </div>
         </div>
 
         <div className="brands">
-          <img src="/adidas-logo.png" alt="Adidas" className="brand-logo" />
-          <img src="/puma-logo.png" alt="Puma" className="brand-logo" />
-          <img src="/lacoste-logo.png" alt="Lacoste" className="brand-logo" />
+          <img src="/src/assets/home-pictures/Adidas_logo.png" alt="Adidas" className="brand-logo" />
+          <img src="/src/assets/home-pictures/Puma-logo-PNG.png" alt="Puma" className="brand-logo" />
+          <img src="/src/assets/home-pictures/lacoste-logo.png" alt="Lacoste" className="brand-logo" />
         </div>
 
         <div className="about">
@@ -76,7 +81,7 @@ const Home = () => {
 
         <div className="fashion-speaks">
           <div className="fashion-image">
-            <img src="/fashion-statue.jpg" alt="Fashion Statue" />
+            <img src="/src/assets/home-pictures/image 1.png" alt="Fashion Statue" />
           </div>
           <div className="fashion-content">
             <h2>Fashion That Speaks</h2>
