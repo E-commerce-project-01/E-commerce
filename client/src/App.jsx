@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Components/home/Home.jsx';
-import Login from './Components/signup/Login.jsx';
-import Products from './Components/AllProducts/ProductList.jsx';
-import Cart from './Components/AllProducts/Cart.jsx';
-import AboutUs from './Components/About/About.jsx'; 
-import Admin from './components/Admin/Admin.jsx';
-import CreatePost from './Components/Profile/CreatePost.jsx';
-import Profile from './Components/Profile/Profile.jsx';
-import BrandAdmin from './components/Admin/BrandsAdmin.jsx';
-import BrandProducts from './components/Admin/Brandproducts.jsx';
-import UsersAdmin from './components/Admin/UsersAdmin.jsx';
-import Userdetails from './components/Admin/Userdetails.jsx';
-import Signup from './components/signup/Signup.jsx';
+import Home from './component/home/Home.jsx';
+import Login from './component/signup/Login.jsx';
+import Products from './component/AllProducts/ProductList.jsx';
+import Cart from './component/AllProducts/Cart.jsx';
+import AboutUs from './component/About/About.jsx'; 
+import Admin from './component/Admin/Admin.jsx';
+import CreatePost from './component/Profile/CreatePost.jsx';
+import Profile from './component/Profile/Profile.jsx';
+import BrandAdmin from './component/Admin/BrandsAdmin.jsx';
+import BrandProducts from './component/Admin/Brandproducts.jsx';
+import UsersAdmin from './component/Admin/UsersAdmin.jsx';
+import Userdetails from './component/Admin/Userdetails.jsx';
+import Signup from './component/signup/Signup.jsx';
 import "./App.css"
 const App = () => {
   return (
@@ -28,9 +28,13 @@ const App = () => {
       <Route path="/adminbrandproducts" element={<BrandProducts />} />
       <Route path="/UsersAdmin" element={<UsersAdmin />} />
       <Route path="/userdetails" element={<Userdetails />} />
-       
-       
-        
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/create-post" element={<CreatePost />} />
+
+
+
+
+
         <Route path="/about" element={<AboutUs />} />
       </Routes>
     </Router>

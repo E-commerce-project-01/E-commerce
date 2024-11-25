@@ -3,6 +3,7 @@ const { signup, login, updateAvatar,getAllUsers, getuserbyid, deleteuserbyid , u
 
 const userRoute = express.Router();
 
+
 userRoute.post("/signup", signup);
 userRoute.post("/login", login);
 userRoute.put("/update-avatar", updateAvatar);
