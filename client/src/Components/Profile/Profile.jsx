@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
-
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -25,7 +24,8 @@ const Profile = () => {
         setUser({
           id: decodedToken.id,
           name: fullName,
-          username: unique
+          username: unique,
+          type: userData.type || 'user' // Ensure type is added here
         });
         const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
         setAvatar(savedAvatar);
@@ -33,9 +33,9 @@ const Profile = () => {
         console.error("Error decoding token:", error);
       }
     } else {
-      navigate("/");
+      navigate("/"); // Redirect if no token exists
     }
-  }, [navigate ]);
+  }, [navigate]);
 
   useEffect(() => {
     if (user) {
@@ -78,7 +78,7 @@ const Profile = () => {
 
           axios.put('http://localhost:3000/user/update-avatar', { userId, avatar: imageUrl })
             .then(() => {
-              const updatedUser = { ...user, avatar: imageUrl };
+              const updatedUser = { ...user, avatar: imageUrl };  // Preserve other user data (like type)
               localStorage.setItem('user', JSON.stringify(updatedUser));
               setAvatar(imageUrl);
             })
@@ -89,6 +89,9 @@ const Profile = () => {
               console.error('Error updating avatar:', err);
             });
         })
+        .catch(err => {
+          console.error('Error uploading image:', err);
+        });
     }
   };
 
