@@ -64,6 +64,7 @@ const Cart = () => {
           }
         }
       };
+     
 
     const handleRemoveItem = async (productId) => {
         const confirm = await Swal.fire({
@@ -103,6 +104,15 @@ const Cart = () => {
         }
     }
 
+    const handleowner = async (id) => {
+        try {
+            const response = await axios.post(`http://localhost:3000/products/decrement/${id}`);
+            console.log(response.data.message); 
+        } catch (error) {
+            console.error("Error incrementing owner count:", error);
+        }
+    };
+
     if (error) return <div className="cart-error">{error}</div>
     if (!cart) return <div className="cart-loading">Loading...</div>
 
@@ -121,7 +131,7 @@ const Cart = () => {
                                 <p className="cart-item-price">{product.CartProducts.priceAtPurchase} ETH</p>
                                 <p className="cart-item-quantity">Quantity: {product.CartProducts.quantity}</p>
                             </div>
-                            <button className="remove-item-button" onClick={() => handleRemoveItem(product.id)}>
+                            <button className="remove-item-button" onClick={() => {handleRemoveItem(product.id),handleowner(product.id)}}>
                                 ❌
                             </button>
                         </div>
@@ -133,7 +143,7 @@ const Cart = () => {
                 <p>Total Amount: {cart.totalAmount || 0} ETH</p>
                 <button 
                     className="confirm-order-button"
-                    onClick={handleConfirmOrder}
+                    onClick={()=>handleConfirmOrder()}
                     disabled={!cart.Products || cart.Products.length === 0}
                 >
                     Confirm Order

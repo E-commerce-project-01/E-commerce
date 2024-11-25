@@ -32,6 +32,14 @@ const ProductList = () => {
     const handleLike = (productId) => {
         setLikedProducts(prev => prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId])
     }
+    const handleowner = async (id) => {
+        try {
+            const response = await axios.post(`http://localhost:3000/products/increment/${id}`);
+            console.log(response.data.message); 
+        } catch (error) {
+            console.error("Error incrementing owner count:", error);
+        }
+    };
 
     const handleAddToCart = async (productId) => {
         const token = localStorage.getItem('token')
@@ -47,6 +55,7 @@ const ProductList = () => {
             if (result.isConfirmed) navigate('/')
             return
         }
+
 
         try {
             const response = await axios.post('http://localhost:3000/cart/add', { productId }, {
@@ -122,7 +131,7 @@ const ProductList = () => {
                                     >
                                         {likedProducts.includes(product.id) ? '❤️' : '🤍'}
                                     </button>
-                                    <button className="buy-button" onClick={() => handleAddToCart(product.id)}>
+                                    <button className="buy-button" onClick={() => {handleowner(product.id),handleAddToCart(product.id)}}>
                                         Buy Now
                                     </button>
                                 </div>
