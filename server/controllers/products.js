@@ -34,7 +34,7 @@ const getFilteredProducts = (req, res) => {
     if (category) {
         whereClause.collection = category
     }
-
+ 
     if (rarity) {
         whereClause.rarity = rarity
     }
@@ -153,6 +153,61 @@ const updateproductbyId = async (req, res) => {
     }
 };
 
+const createProduct = async (req, res) => {
+  try {
+    // Log the incoming request body
+
+    const { 
+      title, 
+      price, 
+      image,
+      status,
+      rarity,
+      chains,
+      collection,
+      stock = 0,
+      onSale = false
+    } = req.body;
+
+    // Validate required fields
+    if (!title || !price || !image || !rarity || !chains || !collection) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields',
+        receivedData: req.body
+      });
+    }
+
+    // Create product with explicit values
+    const product = await db.products.create({
+      title: title.trim(),
+      price: parseFloat(price),
+      image: image.trim(),
+      status: status || 'Available',
+      rarity: rarity.trim(),
+      chains: chains.trim(),
+      collection: collection.trim(),
+      stock: parseInt(stock),
+      onSale: Boolean(onSale)
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Product created successfully",
+      product
+    });
+
+  } catch (error) {
+    console.error('Error creating product:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Error creating product',
+      error: error.message,
+      receivedData: req.body  // Include the received data in error response
+    });
+  }
+};
+
 module.exports = {
-    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount,updateproductbyId
+    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount,updateproductbyId,createProduct
 };
