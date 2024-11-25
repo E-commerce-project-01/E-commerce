@@ -29,6 +29,7 @@ const Login = () => {
                     localStorage.setItem("token", token);
                     localStorage.setItem("user", JSON.stringify(user));
                     localStorage.setItem('userAvatar', response.data.user.avatar);
+                    localStorage.setItem("userType", user.type);
 
                     if (user.type === 'admin') {                    
                         navigate("/Admin");
