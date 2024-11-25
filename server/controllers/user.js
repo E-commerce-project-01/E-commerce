@@ -185,5 +185,20 @@ const deleteuserbyid = async (req, res) => {
         res.status(500).send('Server error'); 
     }
 };
+const updateName = async (req, res) => {
+    try {
+        const { userId, firstName, lastName } = req.body;
+        await db.user.update(
+            { firstName, lastName },
+            { where: { id: userId } }
+        );
+        res.status(200).json({
+            message: 'Name updated successfully',
+            name: `${firstName} ${lastName}`
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating name' });
+    }
+};
 
-module.exports = { signup, login, updateAvatar, getAllUsers ,getuserbyid, deleteuserbyid};
+module.exports = { signup, login, updateAvatar, getAllUsers ,getuserbyid, deleteuserbyid , updateName};
