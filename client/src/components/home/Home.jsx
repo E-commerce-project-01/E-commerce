@@ -57,7 +57,7 @@ const Home = () => {
       <div className="content-wrapper">
         <div className="tabs">
           <button className="tab active">Main Collection</button>
-          <button className="tab">Creators Market</button>
+          <button className="tab" onClick={() => navigate('/products')}>Creators Market</button>
         </div>
 
         <div className="hero">
@@ -66,9 +66,9 @@ const Home = () => {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit.</p>
             
             <div className="hero-buttons">
-              <button className="explore-btn" onClick={() => navigate('/products')}>Explore Now</button> {/*ahmed*/}
-              <button className="create-btn">Create</button>
-            </div>
+              <button className="explore-btn" onClick={() => navigate('/products')}>Explore Now</button> 
+              <button className="create-btn" onClick={() => navigate('/create-product')}>Create</button>         
+                 </div>
 
             <div className="stats">
               <div className="stat-item">
