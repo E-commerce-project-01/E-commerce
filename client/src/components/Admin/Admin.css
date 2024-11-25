@@ -185,22 +185,7 @@ tbody tr:hover {
 .text-gray-400 {
     color: #cbd5e1; 
 }
-footer {
-    display: flex;
-    justify-content: space-between; 
-    align-items: flex-start; 
-}
 
-footer div {
-    flex: 1; 
-    text-align: center; 
-    margin: 0 40px; 
-}
-
-footer p {
-    max-width: 300px; 
-    line-height: 1.5; 
-}
 .marketplace-button {
     background: linear-gradient(90deg, #a445f7, #6a00ff);
     border: none;

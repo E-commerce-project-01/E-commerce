@@ -62,24 +62,27 @@ const BrandAdmin = () => {
     }, []);
 
     return (
-        <div className="brand-grid-container">
+        <div>
+            {console.log(brands)}
+        <div className="admin-brand-grid-container">
             {brands.map((brand) => (
-                <div className="brand-card" key={brand.id}>
-                    {brand.logo ? (
-                        <img src={brand.logo} alt={`${brand.name} logo`} className="brand-logo" onClick={()=>navigate("/adminbrandproducts",{ state: { brandId: brand.id } })}/>
-                    ) : (
-                        <div className="brand-logo-placeholder">No Logo Available</div>
-                    )}
-                    <h3 className="brand-name">{brand.name}</h3>
-                    <div className="button-container">
-                        <button className="brand-button green-button"onClick={()=>handleverify(brand.id)} >Verify</button>
-                        <button className="brand-button red-button" onClick={()=>handledelete(brand.id)}>Remove</button>
+                    <div className="admin-brand-card" key={brand.id}>
+                    
+                        <div className="admin-logo-container">
+                        <img src={brand.logo} alt={`${brand.name} logo`} className="admin-brand-logo"  onClick={()=>navigate("/adminbrandproducts",{ state: { brandId: brand.id } })}/>
+                       
+                        </div>
+                    <h3 className="admin-brand-name">{brand.name}</h3>
+                    <div className="admin-button-container">
+                        <button className="admin-brand-button admin-green-button"onClick={()=>handleverify(brand.id)} >Verify</button>
+                        <button className="admin-brand-button admin-red-button" onClick={()=>handledelete(brand.id)}>Remove</button>
                     </div>
                 </div>
             ))}
              <button className="Users" onClick={() => navigate("/Admin")}>
                 Back
             </button>
+        </div>
         </div>
     );
 };

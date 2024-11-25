@@ -63,8 +63,8 @@ const Userdetails = () => {
                         userposts.map((post) => (
                             <div key={post.id} className="posts-data">
                                 <h4>{post.content}</h4>
-                                <div>
-                                    <img src={post.image} alt={post.content.charAt(0).toUpperCase()} />
+                                <div  className="post-image-container">
+                                    <img src={post.image} alt={post.content.charAt(0).toUpperCase()} className="post-image" />
                                 </div>
                             </div>
                         ))

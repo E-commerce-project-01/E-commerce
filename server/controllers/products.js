@@ -132,6 +132,27 @@ const decrementownercount = async (req, res) => {
     }
 };
 
+const updateproductbyId = async (req, res) => {
+    const productId = req.params.productId; // Get the product ID from the request parameters
+    const { price } = req.body; // Destructure the request body for the attributes you want to update
+
+    try {
+        const [updated] = await db.products.update(
+            { price }, // Attributes to update
+            { where: { id: productId } } // Condition to find the product by ID
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+
+        res.status(200).json({ message: "Product updated successfully." });
+    } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).send("Failed to update product");
+    }
+};
+
 module.exports = {
-    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount
+    getFilteredProducts,getProductbybrand,incrementownercount,decrementownercount,updateproductbyId
 };

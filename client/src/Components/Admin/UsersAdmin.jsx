@@ -41,7 +41,9 @@ const UsersAdmin = () => {
         <div className="user-grid-container">
             {users.map((user) => (
                 <div className="user-card" key={user.id}>
-                   <img src={user.avatar}></img>
+                    <div className="admin-logo-container">
+                   <img src={user.avatar} className='admin-brand-logo'></img>
+                   </div>
                     <h3 className="user-name">{user.firstName}</h3>
                     <h3 className="user-name">{user.lastName}</h3>
 
