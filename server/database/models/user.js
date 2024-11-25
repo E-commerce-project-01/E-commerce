@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'user',
         }
     }, {
-        timestamps: true  // Tracks createdAt and updatedAt
+        timestamps: false  // Tracks createdAt and updatedAt
     });
     return User;
 };
