@@ -39,7 +39,7 @@ exports.addToCart = (req, res) => {
     })
     .catch(() => res.status(500).json({ message: 'Error adding product to cart' }))
 }
-
+ 
 exports.removeFromCart = (req, res) => {
   const decoded = decodeToken(req, res)
   if (!decoded) return

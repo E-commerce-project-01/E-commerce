@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../navbar/Navbar';
 import { jwtDecode } from 'jwt-decode';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
@@ -116,7 +115,6 @@ const Profile = () => {
 
   return (
     <div className="pageWrapper">
-      <Navbar />
       <div className="profilePage">
         <div className="profileHeader">
           <div className="profilePicture">

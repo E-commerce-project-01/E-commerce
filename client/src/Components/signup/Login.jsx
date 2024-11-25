@@ -30,9 +30,14 @@ const Login = () => {
                     localStorage.setItem("user", JSON.stringify(user));
                     localStorage.setItem('userAvatar', response.data.user.avatar);
 
-                    navigate("/home");
-                    window.location.reload();
-                    setError("");
+                    if (user.type === 'admin') {                    
+                        navigate("/Admin");
+                        window.location.reload()
+                    } else {
+                        navigate("/home");
+                        window.location.reload()
+
+                    }
                 }
             } catch (err) {
                 console.error(err);
