@@ -10,4 +10,4 @@ router.post("/increment/:productId", incrementownercount);
 router.post('/decrement/:productId', decrementownercount); // Decrement owner count
 router.put('/:productId', updateproductbyId);
 
-module.exports = router; 
+module.exports = router;  

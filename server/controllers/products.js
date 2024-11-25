@@ -21,7 +21,7 @@ const getProductbybrand = async (req, res) => {
         console.error("Error fetching products by brand ID:", error);
         res.status(500).send("Failed to fetch products");
     }
-};
+};  
 const { Op } = require('sequelize');
 const { products } = require('../database/index');
 
