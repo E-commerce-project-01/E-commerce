@@ -12,6 +12,8 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newName, setNewName] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -34,7 +36,33 @@ const Profile = () => {
     } else {
       navigate("/");
     }
-  }, [navigate]);
+  }, [navigate ]);
+
+  useEffect(() => {
+    if (user) {
+      setNewName(user.name);
+    }
+  }, [user]);
+
+  const handleNameUpdate = () => {
+    const [firstName, lastName] = newName.split(' ');
+    const userData = JSON.parse(localStorage.getItem('user'));
+    
+    axios.put('http://localhost:3000/user/update-name', { 
+      userId: userData.id, 
+      firstName, 
+      lastName 
+    })
+      .then(() => {
+        const updatedUser = { ...userData, name: newName };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        setIsEditing(false);
+      })
+      .catch(err => {
+        console.error('Error updating name:', err);
+      });
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -55,12 +83,16 @@ const Profile = () => {
               localStorage.setItem('user', JSON.stringify(updatedUser));
               setAvatar(imageUrl);
             })
+            .then(()=>{
+              window.location.reload()
+            })
             .catch(err => {
               console.error('Error updating avatar:', err);
             });
         })
     }
   };
+
   useEffect(() => {
     const fetchPosts = () => {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -81,6 +113,7 @@ const Profile = () => {
   if (!user) {
     return <div className="loading">Loading profile...</div>;
   }
+
   return (
     <div className="pageWrapper">
       <Navbar />
@@ -96,21 +129,38 @@ const Profile = () => {
             <FontAwesomeIcon icon={faCamera} />
           </div>
           <div className="profileActions">
-            <div className="createPostButton" onClick={()=>{navigate('/create-post')}}>
+            <div className="createPostButton" onClick={() => {navigate('/create-post')}}>
               <FontAwesomeIcon icon={faPlus} /> Create Post
             </div>
-            <div className="editProfileButton">
+            <div className="editProfileButton" onClick={() => setIsEditing(!isEditing)}>
               <FontAwesomeIcon icon={faEdit} /> Edit Profile
             </div>
           </div>
         </div>
+
         <div className="profileDetails">
-          <h1 style={{ color: "#ffffff" }}>{user.name}</h1>
-          <p style={{ color: "#625c70" }}>@{user.username}</p>
-          <p style={{ color: "#ffffff" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Torro, consectetur adipiscing elit. Ut urna placerat morbi cursus pulvinar nunc adipiscing.
-          </p>
+          {isEditing ? (
+            <div className="editName">
+              <input
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)} 
+              />
+              <button  className='saveEditProfile' onClick={()=>{handleNameUpdate() , setTimeout(() => {
+        window.location.reload();
+      }, 50)}}>Save Change</button>
+            </div>
+          ) : (
+            <>
+              <h1 style={{ color: "#ffffff" }}>{user.name}</h1>
+              <p style={{ color: "#625c70" }}>@{user.username}</p>
+              <p style={{ color: "#ffffff" }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Torro, consectetur adipiscing elit. Ut urna placerat morbi cursus pulvinar nunc adipiscing.
+              </p>
+            </>
+          )}
         </div>
+
         <div className="profilepostContent">
           <div className="sideImages">
             <div className="allPics" style={{ marginTop: "20px" }}>
@@ -144,6 +194,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
             <div className="metaLook">
               <h2>Meta Look</h2>
               <img alt="Meta Look" src="https://res.cloudinary.com/dc9siq9ry/image/upload/v1732147731/ncikeqmudotwwulqxoub.jpg" />
@@ -154,6 +205,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+
           <div className="createdPostes">
             <div className="postsSection">
               {posts.length > 0 ? (
