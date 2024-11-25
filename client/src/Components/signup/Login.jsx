@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-
-import '../signup/Login.css';
+import  "../signup/Login.css"
 
 const Login = () => {
     const [email, setEmail] = useState("");

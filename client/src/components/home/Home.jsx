@@ -28,7 +28,7 @@ const Home = () => {
           .slice(0, 3);
         setTrendingProducts(newProducts);
         // Fetch users/creators
-        const creatorsResponse = await axios.get('http://localhost:3000/user/users');
+        const creatorsResponse = await axios.get('http://localhost:3000/user/all');
         setCreators(creatorsResponse.data.slice(0, 3));
            // Fetch brands
    const brandsResponse = await axios.get('http://localhost:3000/brands/allbrands');

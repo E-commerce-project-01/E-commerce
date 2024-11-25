@@ -38,12 +38,20 @@ const Signup = () => {
     if (!passwordValidation.isValid) {
       Swal.fire({
         icon: 'error',
-        title: 'Weak Password',
+        title: '<span class="swal-title-error">Weak Password</span>',
         text: passwordValidation.errors.join(' '),
+        background: 'rgba(255, 255, 255, 0.1)',
+        color: 'white',
+        confirmButtonText: 'Got it!',
+        customClass: {
+          title: 'swal-title-error',
+          content: 'swal-content',
+          confirmButton: 'login-custom-button',
+        }
       });
       return;
     }
-
+  
     try {
       const userData = {
         firstName,
@@ -54,19 +62,27 @@ const Signup = () => {
         birthDay,
         birthYear,
       };
-
+  
       const response = await axios.post(
         'http://localhost:3000/user/signup',
         userData,
         { headers: { 'Content-Type': 'application/json' } }
       );
-
+  
       Swal.fire({
         icon: 'success',
-        title: 'Account Created',
+        title: '<span class="swal-title-success">Account Created</span>',
         text: 'You have successfully signed up. Please log in.',
+        background: 'rgba(255, 255, 255, 0.1)',
+        color: 'white',
+        confirmButtonText: 'Got it!',
+        customClass: {
+          title: 'swal-title-success',
+          content: 'swal-content',
+          confirmButton: 'succes-custom-button',
+        }
       });
-
+  
       navigate('/');
     } catch (error) {
       if (error.response && error.response.data) {
@@ -74,26 +90,50 @@ const Signup = () => {
         if (errorData.errors) {
           Swal.fire({
             icon: 'error',
-            title: 'Validation Error',
+            title: '<span class="swal-title-error">Validation Error</span>',
             text: errorData.errors.join(', '),
+            background: 'rgba(255, 255, 255, 0.1)',
+            color: 'white',
+            confirmButtonText: 'Got it!',
+            customClass: {
+              title: 'swal-title-error',
+              content: 'swal-content',
+              confirmButton: 'login-custom-button',
+            }
           });
         } else {
           Swal.fire({
             icon: 'error',
-            title: 'Signup Failed',
+            title: '<span class="swal-title-error">Signup Failed</span>',
             text: errorData.message || 'An error occurred during signup. Please try again later.',
+            background: 'rgba(255, 255, 255, 0.1)',
+            color: 'white',
+            confirmButtonText: 'Got it!',
+            customClass: {
+              title: 'swal-title-error',
+              content: 'swal-content',
+              confirmButton: 'login-custom-button',
+            }
           });
         }
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Signup Failed',
+          title: '<span class="swal-title-error">Signup Failed</span>',
           text: 'An error occurred during signup. Please try again later.',
+          background: 'rgba(255, 255, 255, 0.1)',
+          color: 'white',
+          confirmButtonText: 'Got it!',
+          customClass: {
+            title: 'swal-title-error',
+            content: 'swal-content',
+            confirmButton: 'login-custom-button',
+          }
         });
       }
     }
   };
-
+  
   return (
     <div className="signup-container">
       <div className="signup-image-container">
