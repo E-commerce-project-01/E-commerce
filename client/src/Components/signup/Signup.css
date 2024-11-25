@@ -135,6 +135,8 @@
   width: 500px;
   padding-right: 250px;
   margin-top: 4px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.878));
+
 }
 
 .gretting {

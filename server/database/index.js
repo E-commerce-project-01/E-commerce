@@ -51,9 +51,6 @@ db.user.hasMany(db.posts)
 db.posts.belongsTo(db.user)
 
 
-
-
-
 //   sequelize.sync({alter : true}).then(() => {
 //  console.log(' table created successfully!');
 //  }).catch((error) => {

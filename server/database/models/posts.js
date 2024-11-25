@@ -13,16 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    userId: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
+        model: 'Users',
         key: 'id'
       }
     }
   }, {
-    timestamps: true
+    timestamps: false
   });
 
   return posts;

@@ -14,6 +14,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
+
+
 <Router>
     <Routes>
      <Route path="/user/signup" element={<Signup />} />
@@ -25,7 +27,7 @@ function App() {
      <Route path="/profile" element={<Profile />} />
      <Route path="/create-post" element={<CreatePost />} />
      </Routes>
-  </Router>
+     </Router>
       
   )
 }
