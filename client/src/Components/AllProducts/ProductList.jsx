@@ -4,7 +4,6 @@ import './ProductList.css'
 import Sidebar from './Sidebar/Sidebar'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
-import Navbar from '../navbar/Navbar'
 
 
 const ProductList = () => {
@@ -82,7 +81,6 @@ const ProductList = () => {
 
     return (
         <>
-        <Navbar />
 
         <div className="product-list-container">
             <div className="sidebar-container">

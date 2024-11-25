@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
+import { FiSearch, FiShoppingCart, FiBell, FiMessageSquare, FiChevronDown , FiLogOut } from 'react-icons/fi';
 import './Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState('/default-avatar.png');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(false); 
+
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user')) || {};
@@ -13,7 +16,19 @@ const Navbar = () => {
     if (savedAvatar) {
       setAvatar(savedAvatar);
     }
+    if (userData.type === 'admin') {
+      setIsAdmin(true);
+    }
+    if (userData.type === 'user') {
+      setIsUser(true);
+    }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');  
+    navigate('/')
+    window.location.reload()
+  };
 
   return (
     <div className="nav-container">
@@ -33,6 +48,9 @@ const Navbar = () => {
           <a href="#collection">Personal Collection</a>
           <a href="#drops">Drops</a>
           <a onClick={() => navigate('/about')} className="more-link" style={{'cursor':'pointer'}}>More <FiChevronDown /></a> 
+          {isAdmin && (
+            <a onClick={() => navigate('/admin')} style={{ cursor: 'pointer' }}>Admin</a>
+          )}
         </nav>
       </div>
       <div className="nav-right">
@@ -45,12 +63,16 @@ const Navbar = () => {
         <button className="wallet-btn" onClick={() => navigate('/cart')}>
         <FiShoppingCart size={18} />
         </button>
-        <img 
+        {isUser && (   <img 
           onClick={() => navigate("/profile")}
           src={avatar}
           alt="Profile" 
           className="profile-img"
-        />
+        />)}
+         <button className="icon-button" onClick={handleLogout}>
+          <FiLogOut size={20} />
+        </button>
+      
       </div>
     </div>
   );
