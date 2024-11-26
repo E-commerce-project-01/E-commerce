@@ -70,14 +70,15 @@ const Admin = () => {
                     <button className="marketplace-button">
                     Marketplace Performance
                     </button>
-           <div className="flex items-center space-x-4 ml-4 justify-end"> 
-           <button className="brands-button space-x-4" onClick={()=>navigate("/UsersAdmin")}>
-                    Users
-                    </button>
-                  <button className="brands-button" onClick={()=>navigate("/brandsAdmin")}>
+                    <div className="flex items-center space-x-4 ml-4 justify-end"> 
+                 <button className="brands-button ml-4" onClick={() => navigate("/UsersAdmin")}>
+                   Users
+                        </button>
+                   <button className="brands-button ml-4" onClick={() => navigate("/brandsAdmin")}>
                     Brands
-                    </button>
-            </div>
+                  </button> 
+                    </div>
+
                     </div>       
                 </div>
         <table className="w-full text-left">

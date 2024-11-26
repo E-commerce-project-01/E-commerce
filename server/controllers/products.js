@@ -1,4 +1,6 @@
 const db = require("../database/index");
+const { Op } = require('sequelize');
+const { products } = require('../database/index');
 
 const getProductbybrand = async (req, res) => {
     const brandId = req.params.brandId; // Get the brand ID from the request parameters
@@ -21,9 +23,7 @@ const getProductbybrand = async (req, res) => {
         console.error("Error fetching products by brand ID:", error);
         res.status(500).send("Failed to fetch products");
     }
-};
-const { Op } = require('sequelize');
-const { products } = require('../database/index');
+};  
 
 
 const getFilteredProducts = (req, res) => {

@@ -11,4 +11,4 @@ router.post('/decrement/:productId', decrementownercount); // Decrement owner co
 router.put('/:productId', updateproductbyId);
 router.post('/create', createProduct);
 
-module.exports = router; 
+module.exports = router;  
