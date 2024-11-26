@@ -44,12 +44,12 @@ db.products.belongsToMany(db.cart, {
   foreignKey: 'ProductId',
   otherKey: 'CartId'
 });
+
 db.brands.hasMany(db.products)
 db.products.belongsTo(db.brands)
 
 db.user.hasMany(db.posts)
 db.posts.belongsTo(db.user)
-
 
 
 

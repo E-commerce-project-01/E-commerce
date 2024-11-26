@@ -1,17 +1,46 @@
 const db = require("../database/index");
+
 const { Op } = require("sequelize");
 const { products } = require("../database/index");
 
 const getProductbybrand = async (req, res) => {
-  const brandId = req.params.brandId; // Get the brand ID from the request parameters
+  const brandId = req.params.brandId;
+
+const { Op } = require('sequelize');
+const { products } = require('../database/index');
+
+const getProductbybrand = async (req, res) => {
+    const brandId = req.params.brandId;
+
+    try {
+        const products = await db.products.findAll({
+            where: { brandId }, 
+            include: [{
+                model: db.brands,
+                attributes: ['id', 'name'] 
+            }]
+        });
+
+        if (products.length === 0) {
+            return res.status(404).json({ message: "No products found for this brand." });
+        }
+
+        res.json(products); 
+    } catch (error) {
+        console.error("Error fetching products by brand ID:", error);
+        res.status(500).send("Failed to fetch products");
+    }
+};  
+
+
 
   try {
     const products = await db.products.findAll({
-      where: { brandId }, // Filter products by the specified brand ID
+      where: { brandId }, 
       include: [
         {
           model: db.brands,
-          attributes: ["id", "name"], // Include brand details if needed
+          attributes: ["id", "name"], 
         },
       ],
     });
@@ -22,7 +51,7 @@ const getProductbybrand = async (req, res) => {
         .json({ message: "No products found for this brand." });
     }
 
-    res.json(products); // Send the products as a JSON response
+    res.json(products); 
   } catch (error) {
     console.error("Error fetching products by brand ID:", error);
     res.status(500).send("Failed to fetch products");
@@ -38,7 +67,7 @@ const getFilteredProducts = (req, res) => {
         ...(category && { collection: category }),
         ...(rarity && { rarity }),
         ...(status && { status }),
-        ...(chains && { chains: { [Op.like]: `%${chains}%` } }), // Fixed the syntax error here
+        ...(chains && { chains: { [Op.like]: `%${chains}%` } }), 
         ...(onSale === "true" && { onSale: true }),
         ...(priceRange && (() => {
           const [minPrice, maxPrice] = priceRange.split("-").map(Number);
