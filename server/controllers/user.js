@@ -138,7 +138,7 @@ const updateAvatar = async (req, res) => {
         res.status(200).json({
             message: 'Avatar updated successfully',
             avatar: avatar
-        });
+        })
     } catch (error) {
         console.error('Error updating avatar:', error);
         res.status(500).json({ message: 'Error updating avatar' });

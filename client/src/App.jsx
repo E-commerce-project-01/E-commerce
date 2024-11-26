@@ -15,6 +15,8 @@ import Userdetails from './Components/Admin/Userdetails.jsx';
 import Signup from './Components/signup/Signup.jsx';
 import Navbar from './Components/navbar/Navbar.jsx';
 import Footer from './Components/footer/Footer.jsx';
+import CreateProduct from './Components/createProduct/createProduct.jsx';
+
 import "./App.css";
 
 const App = () => {
@@ -32,6 +34,7 @@ const App = () => {
               <Route path="/cart" element={<Cart />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/create-product" element={<CreateProduct />} />
               <Route path="/about" element={<AboutUs />} />
             </Routes>
             <Footer />
@@ -51,6 +54,8 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/about" element={<AboutUs />} />
+              <Route path="/create-product" element={<CreateProduct />} />
+
             </Routes>
             <Footer />
           </>
