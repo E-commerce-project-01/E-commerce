@@ -56,23 +56,22 @@
     margin-top: 1rem;
   }
   
-  .social-icons a {
-    width: 24px;
-    height: 24px;
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
   }
   
-  .social-icons img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-  
-  .social-icons img:hover {
-    opacity: 0.8;
+  .social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: rgba(255, 255, 255, 1);
   }
   
   @media (max-width: 1024px) {

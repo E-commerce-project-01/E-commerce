@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaYoutube, FaDiscord, FaInstagram } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -36,9 +37,15 @@ const Footer = () => {
             <li>+012 3456789</li>
             <li>adorableprogrammer@gmail.com</li>
             <div className="social-icons">
-              <a href="#"><img src="/youtube-icon.svg" alt="YouTube" /></a>
-              <a href="#"><img src="/discord-icon.svg" alt="Discord" /></a>
-              <a href="#"><img src="/instagram-icon.svg" alt="Instagram" /></a>
+              <a href="#" className="social-icon">
+                <FaYoutube size={16} />
+              </a>
+              <a href="#" className="social-icon">
+                <FaDiscord size={16} />
+              </a>
+              <a href="#" className="social-icon">
+                <FaInstagram size={16} />
+              </a>
             </div>
           </ul>
         </div>

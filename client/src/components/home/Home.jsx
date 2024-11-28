@@ -14,13 +14,14 @@ const Home = () => {
   const [creators, setCreators] = useState([]);
   const [likedProducts, setLikedProducts] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [upcomingCreators, setUpcomingCreators] = useState([]);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch all products
         const productsResponse = await axios.get('http://localhost:3000/products');
-        setProducts(productsResponse.data.slice(0, 9));
+        setProducts(productsResponse.data.slice(0, 8));
         
         // Get first 3 products with status "new"
         const newProducts = productsResponse.data
@@ -36,6 +37,12 @@ const Home = () => {
      .filter(brand => brand.verified === 1)
      .slice(-3); // Get last 3 verified brands
    setBrands(verifiedBrands);
+
+        // Fetch all users and get last 3
+        const usersResponse = await axios.get('http://localhost:3000/user/all');
+        const lastThreeUsers = usersResponse.data.slice(-3);
+        setUpcomingCreators(lastThreeUsers);
+
       } catch (error) {
         console.error('Failed to load data:', error);
       }
@@ -232,7 +239,7 @@ const Home = () => {
             <span className="chains">{product.chains}</span>
           </div>
           <div className="product-title-price">
-            <h2 className="product-title">{product.title}</h2>
+            <h4 className="product-title2">{product.title}</h4>
             <span className="product-price">{product.price.toLocaleString()} ETH</span>
           </div>
           <div className="product-footer">
@@ -251,6 +258,31 @@ const Home = () => {
     ))}
           </div>
         </div>
+
+<div className="upcoming-creators">
+  <h2>Upcoming Creators</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  
+  <div className="creators-grid">
+    {upcomingCreators.map(creator => (
+      <div key={creator.id} className="creator-card">
+        <div className="creator-banner">
+          <img src={creator.background || '/src/assets/default-banner.png'} alt="Creator Banner" />
+        </div>
+        <div className="creator-profile">
+          <img 
+            src={creator.avatar || '/src/assets/default-avatar.png'} 
+            alt={`${creator.firstName} ${creator.lastName}`} 
+            className="creator-avatar" 
+          />
+          <h3>{creator.firstName} {creator.lastName}</h3>
+        </div>
+        <p className="creator-description">{creator.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}</p>
+        <button className="follow-button">+ Follow</button>
+      </div>
+    ))}
+  </div>
+</div>
 
 <div className="upcoming-brands">
   <h2>Upcoming Brands</h2>
@@ -273,48 +305,6 @@ const Home = () => {
   </div>
 </div>
 
-<div className="upcoming-brands">
-  <h2>Upcoming Brands</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  
-  <div className="brands-grid">
-    <div className="brand-card">
-      <div className="brand-image">
-        <img src="/src/assets/home-pictures/Adidas_logo.png" alt="Adidas" />
-      </div>
-      <div className="brand-profile">
-        <img src="/src/assets/home-pictures/Adidas_logo.png" alt="Adidas" className="brand-avatar" />
-        <span className="brand-name">Adidas <span className="verified">✓</span></span>
-      </div>
-      <p className="brand-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <button className="follow-button">+ Follow</button>
-    </div>
-
-    <div className="brand-card">
-      <div className="brand-image">
-        <img src="/src/assets/home-pictures/nike-logo.png" alt="Nike" />
-      </div>
-      <div className="brand-profile">
-        <img src="/src/assets/home-pictures/nike-logo.png" alt="Nike" className="brand-avatar" />
-        <span className="brand-name">Nike <span className="verified">✓</span></span>
-      </div>
-      <p className="brand-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <button className="follow-button followed">+ Followed</button>
-    </div>
-
-    <div className="brand-card">
-      <div className="brand-image">
-        <img src="/src/assets/home-pictures/lacoste-logo.png" alt="Lacoste" />
-      </div>
-      <div className="brand-profile">
-        <img src="/src/assets/home-pictures/lacoste-logo.png" alt="Lacoste" className="brand-avatar" />
-        <span className="brand-name">Lacoste <span className="verified">✓</span></span>
-      </div>
-      <p className="brand-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <button className="follow-button">+ Follow</button>
-    </div>
-  </div>
-</div>
 <div className="faq-section">
   <h2>Frequently Asked Question</h2>
   <p className="faq-subtitle">Wanna Ask Something?</p>

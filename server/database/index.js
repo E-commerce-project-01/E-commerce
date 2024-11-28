@@ -35,14 +35,12 @@ db.cart.belongsTo(db.user);
 
 db.cart.belongsToMany(db.products, { 
   through: db.CartProducts,
-  foreignKey: 'CartId',
-  otherKey: 'ProductId'
+  foreignKey: 'cartId'
 });
 
 db.products.belongsToMany(db.cart, { 
   through: db.CartProducts,
-  foreignKey: 'ProductId',
-  otherKey: 'CartId'
+  foreignKey: 'ProductId'
 });
 
 db.brands.hasMany(db.products)
@@ -52,6 +50,12 @@ db.user.hasMany(db.posts)
 db.posts.belongsTo(db.user)
 
 
+  sequelize.sync({force : true}).then(() => {
+ console.log(' table created successfully!');
+ }).catch((error) => {
+  console.error('Unable to create table : ', error);
+ });
+ 
 
 
 // sequelize.sync({alter : true}).then(() => {

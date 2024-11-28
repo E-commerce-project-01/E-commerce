@@ -57,6 +57,8 @@ const Profile = () => {
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
         setIsEditing(false);
+      }).then(()=>{
+        window.location.reload()
       })
       .catch(err => {
         console.error('Error updating name:', err);
@@ -83,7 +85,9 @@ const Profile = () => {
               setAvatar(imageUrl);
             })
             .then(()=>{
-              window.location.reload()
+              setTimeout(() => {
+                window.location.reload()
+              }, 10);
             })
             .catch(err => {
               console.error('Error updating avatar:', err);
