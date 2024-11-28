@@ -25,7 +25,7 @@ const Profile = () => {
           id: decodedToken.id,
           name: fullName,
           username: unique,
-          type: userData.type || 'user' // Ensure type is added here
+          type: userData.type || 'user' 
         });
         const savedAvatar = userData.avatar || localStorage.getItem(`userAvatar_${userData.id}`);
         setAvatar(savedAvatar);
@@ -33,7 +33,7 @@ const Profile = () => {
         console.error("Error decoding token:", error);
       }
     } else {
-      navigate("/"); // Redirect if no token exists
+      navigate("/");
     }
   }, [navigate]);
 
@@ -57,6 +57,8 @@ const Profile = () => {
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
         setIsEditing(false);
+      }).then(()=>{
+        window.location.reload()
       })
       .catch(err => {
         console.error('Error updating name:', err);
@@ -78,20 +80,19 @@ const Profile = () => {
 
           axios.put('http://localhost:3000/user/update-avatar', { userId, avatar: imageUrl })
             .then(() => {
-              const updatedUser = { ...user, avatar: imageUrl };  // Preserve other user data (like type)
+              const updatedUser = { ...user, avatar: imageUrl };  
               localStorage.setItem('user', JSON.stringify(updatedUser));
               setAvatar(imageUrl);
             })
             .then(()=>{
-              window.location.reload()
+              setTimeout(() => {
+                window.location.reload()
+              }, 10);
             })
             .catch(err => {
               console.error('Error updating avatar:', err);
             });
         })
-        .catch(err => {
-          console.error('Error uploading image:', err);
-        });
     }
   };
 
